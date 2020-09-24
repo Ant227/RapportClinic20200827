@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class SearchActivity extends AppCompatActivity {
 
     private MaterialSearchBar materialSearchBar;
-    private ArrayList<String> nameList;
+    private ArrayList<Patient> patients;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
 
 
-        nameList = new ArrayList<>();
+        patients = new ArrayList<>();
         materialSearchBar = findViewById(R.id.search_searchBar);
 
 

@@ -10,6 +10,9 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class MyDataBaseHelper extends SQLiteOpenHelper {
 
 
@@ -24,7 +27,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_DATE = "date";
 
     private final String 
-        CREATE_PATIENT_RECORD_TABLE = 
+        CREATE_PatientRecord_TABLE =
             "CREATE TABLE " + TABLE_NAME +
             " ("+ COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_NAME + " TEXT, " +
@@ -39,14 +42,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-       /* String query = "CREATE TABLE " + TABLE_NAME +
-                " ("+ COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_NAME + " TEXT, " +
-                COLUMN_AGE + " INT, " +
-                COLUMN_GENDER + " TEXT, " +
-                COLUMN_DATE + " TEXT);" ;
-*/
-        db.execSQL(CREATE_PATIENT_RECORD_TABLE);
+        db.execSQL(CREATE_PatientRecord_TABLE);
 
 
     }
@@ -76,13 +72,61 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
     public Cursor readPatient(){
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM "+ TABLE_NAME;
+        ArrayList<Patient> patients = new ArrayList<>();
 
         Cursor cursor = null;
         if(db != null){
             cursor = db.rawQuery(query,null);
         }
         return cursor;
+
+        /*
+
+
+        while (cursor.moveToNext()) {
+
+            patients.add(new Patient(
+                    new Integer(cursor.getString(0)),
+                    cursor.getString(1),
+                    new Integer(cursor.getString(2)),
+                    cursor.getString(3),
+                    cursor.getString(4)
+                    )
+            );
+
+          return patients;
+         */
     }
+
+    // get all data from database
+    public ArrayList<Patient>   readPatients(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM "+ TABLE_NAME;
+        ArrayList<Patient> patients = new ArrayList<>();
+
+        Cursor cursor = null;
+        if(db != null){
+            cursor = db.rawQuery(query,null);
+        }
+
+
+
+        while (cursor.moveToNext()) {
+
+            patients.add(new Patient(
+                    new Integer(cursor.getString(0)),
+                    cursor.getString(1),
+                    new Integer(cursor.getString(2)),
+                    cursor.getString(3),
+                    cursor.getString(4)
+                    )
+            );
+        }
+          return patients;
+
+    }
+
+
 
 
     //get Patient by name
@@ -103,5 +147,34 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public ArrayList<Patient> getPatientsByName(String name){
+        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        ArrayList<Patient> patients = new ArrayList<>();
+
+        String[] sqlSelect={COLUMN_ID,
+                COLUMN_NAME,
+                COLUMN_AGE,
+                COLUMN_GENDER,
+                COLUMN_DATE};
+
+        qb.setTables(TABLE_NAME);
+        Cursor cursor = qb.query(db, sqlSelect, COLUMN_NAME + " LIKE ?",
+                new String[]{"%"+name+"%"}, null, null, null);
+
+        while (cursor.moveToNext()) {
+
+            patients.add(new Patient(
+                            new Integer(cursor.getString(0)),
+                            cursor.getString(1),
+                            new Integer(cursor.getString(2)),
+                            cursor.getString(3),
+                            cursor.getString(4)
+                    )
+            );
+        }
+        return patients;
+
+    }
 
 }

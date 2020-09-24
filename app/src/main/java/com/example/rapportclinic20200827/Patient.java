@@ -44,6 +44,15 @@ public class Patient{
 		this.Date = Date;
 	}
 
+	public Patient(ContentValues cv){
+		this.ID = cv.getAsInteger("_id");
+		this.Name = cv.getAsString("name");
+		this.Age = cv.getAsInteger("age");
+		this.Sex = cv.getAsString("gender");
+		this.Date = cv.getAsString("date");
+	}
+
+
 	public Patient(Patient patient) {
 		this.ID = patient.getID();
 		this.Name = patient.getName();
@@ -84,7 +93,10 @@ public class Patient{
 
 		return cv;
 	}
-	
+
+
+
+
 	public void setID(Integer ID){
 		this.ID = ID;
 	}

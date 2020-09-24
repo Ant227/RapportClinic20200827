@@ -15,21 +15,20 @@ import com.example.rapportclinic20200827.R;
 
 import java.util.ArrayList;
 
+import com.example.rapportclinic20200827.Patient;
+
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
 
     private Context context;
-    private ArrayList<String> idlist, nameList, ageList, genderList, dateList;
 
 
-    public CustomAdapter(Context context, ArrayList<String> idlist, ArrayList<String> nameList, ArrayList<String> ageList, ArrayList<String> genderList, ArrayList<String> dateList) {
+    private ArrayList<Patient> patients;
+
+
+    public CustomAdapter(Context context,ArrayList<Patient> patients){
         this.context = context;
-        this.idlist = idlist;
-        this.nameList = nameList;
-        this.ageList = ageList;
-        this.genderList = genderList;
-        this.dateList = dateList;
+        this.patients = patients;
     }
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -41,16 +40,21 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
 
-        holder.name.setText(String.valueOf(nameList.get(position)));
-        holder.date.setText(String.valueOf(dateList.get(position)));
+
+
+        holder.name.setText(patients.get(position).getName());
+        holder.date.setText(patients.get(position).getDate());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ProfileActivity.class);
-                intent.putExtra("name",nameList.get(position));
-                intent.putExtra("age",ageList.get(position));
-                intent.putExtra("gender",genderList.get(position));
+
+
+                intent.putExtra("name",patients.get(position).getName());
+                intent.putExtra("age",patients.get(position).getAge());
+                intent.putExtra("gender",patients.get(position).getSex());
+
                 context.startActivity(intent);
             }
         });
@@ -59,7 +63,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     @Override
     public int getItemCount() {
-        return nameList.size();
+
+
+        return patients.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

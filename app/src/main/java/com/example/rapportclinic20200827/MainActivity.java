@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mainRecyclerView;
     private MyDataBaseHelper myDb;
-    private ArrayList<String> idList,nameList,ageList,genderList,dateList;
+    private ArrayList<Patient> patients;
     private CustomAdapter customAdapter;
     private MaterialSearchBar materialSearchBar;
     private FloatingActionButton fab;
@@ -48,22 +48,13 @@ public class MainActivity extends AppCompatActivity {
 
         myDb = new MyDataBaseHelper(this);
 
-        idList = new ArrayList<>();
-        nameList = new ArrayList<>();
-        ageList = new ArrayList<>();
-        genderList = new ArrayList<>();
-        dateList = new ArrayList<>();
 
-        customAdapter = new CustomAdapter(this,
-                idList,
-                nameList,
-                ageList,
-                genderList,
-                dateList);
+        patients = myDb.readPatients();
 
-        Cursor cursor = myDb.readPatient();
+        customAdapter = new CustomAdapter(this,patients);
 
-        displayData(cursor);
+
+
 
         mainRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
@@ -76,14 +67,15 @@ public class MainActivity extends AppCompatActivity {
            @Override
            public void onFocusChange(View v, boolean hasFocus) {
                if(hasFocus){
-                  resetAllData();
+                   patients.clear();
+                   //patients = myDb.readPatients();
                    mainRecyclerView.setAdapter(customAdapter);
                   customAdapter.notifyDataSetChanged();
                }
-               else{resetAllData();
+               else{
+                   patients.clear();
 
-                   Cursor cursor2 = myDb.readPatient();
-                   displayData(cursor2);
+                   patients = myDb.readPatients();
                    mainRecyclerView.setAdapter(customAdapter);
                }
            }
@@ -111,17 +103,18 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
 
                 if(TextUtils.isEmpty(s.toString())){
-                    resetAllData();
-                    Cursor cursor2 = myDb.readPatient();
-                    displayData(cursor2);
+                    patients.clear();
+
+
+                    patients = myDb.readPatients();
                     mainRecyclerView.setAdapter(customAdapter);
 
 
                 }
                 else{
-                    resetAllData();
-                    Cursor cursor1 = myDb.getPatientByName(s.toString());
-                    displayData(cursor1);
+                    patients.clear();
+
+                    patients = myDb.getPatientsByName(s.toString());
                     mainRecyclerView.setAdapter(customAdapter);
                 }
             }
@@ -143,24 +136,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void displayData(Cursor cursor){
-        while (cursor.moveToNext()) {
-            idList.add(cursor.getString(0));
-            nameList.add(cursor.getString(1));
-            ageList.add(cursor.getString(2));
-            genderList.add(cursor.getString(3));
-            dateList.add(cursor.getString(4));
-        }
 
-    }
 
-    private void resetAllData(){
-        idList.clear();
-        nameList.clear();
-        ageList.clear();
-        genderList.clear();
-        dateList.clear();
-    }
 
 
     public void goToAddActivity(View view){
@@ -170,12 +147,17 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void goToSearchActivity(){
+
+
         Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-        intent.putExtra("nameList",nameList);
+        //intent.putExtra("patients",patients);
+
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this,
                 materialSearchBar,"searchBar");
 
         startActivity(intent, options.toBundle());
+
+
     }
 
     public void mainProfilePopup(View view){

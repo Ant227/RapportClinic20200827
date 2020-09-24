@@ -1,4 +1,4 @@
-
+import android.content.ContentValues;
 
 public class Visit {
 	private Integer ID = null;
@@ -9,6 +9,15 @@ public class Visit {
 	private String Treatment = null;
 	
 
+
+	public Visit(ContentValues cv){
+		this.ID = cv.getAsInteger("_id");
+		this.Patient_ID = cv.getAsInteger("patient_id");
+		this.Date = cv.getAsString("date");
+		this.History = cv.getAsString("history");
+		this.Examination = cv.getAsString("examination");
+		this.Treatment = cv.getAsString("treatment");
+	}
 	
 	
 	public Visit(){
@@ -54,7 +63,24 @@ public class Visit {
 		this.Examination = Examination;
 		this.Treatment = Treatment;
 	}
-	
+
+	public ContentValues getContentValues(){
+		ContentValues cv = new ContentValues();
+
+		if (this.ID != null) cv.put("_id",this.ID);
+		if (this.Patient_ID != null) cv.put("patient_id", this.Patient_ID);
+
+		cv.put("date",this.Date);
+		cv.put("history", this.History);
+		cv.put("examination", this.Examination);
+		cv.put("treatment",this.Treatment);
+
+		return cv;
+
+
+	}
+
+
 	public Integer getID(){
 		return this.ID;
 	}
