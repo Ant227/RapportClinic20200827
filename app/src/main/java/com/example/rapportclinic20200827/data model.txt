@@ -1,0 +1,23 @@
+Data Model
+
+Database File Name : "RapportClinical.db"
+
+
+	Table Name : "PatientRecord"
+		
+		Fileds : 	"_id",		primary key,int
+				"name",	text
+				"age",		int
+				"gender",	text
+				"date" 	text
+			
+		
+	
+	Table Name : "VisitRecord"
+		
+		Fileds :	"_id",		primary key,int
+				"patient_id",	foregin key,int
+				"date",	text
+				"history",	text
+				"examination",	text
+				"treatment",	text
