@@ -13,27 +13,54 @@ import androidx.annotation.Nullable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+
+import com.example.rapportclinic20200827.Visit;
+import com.example.rapportclinic20200827.Patient;
+
+
+
 public class MyDataBaseHelper extends SQLiteOpenHelper {
 
 
     private Context context;
     private static final String DATABASE_NAME = "RapportClinical.db";
     private static final int DATABASE_VERSION = 1;
-    private static final String TABLE_NAME = "PatientRecord";
-    private static final String COLUMN_ID = "_id";
-    private static final String COLUMN_NAME = "name";
-    private static final String COLUMN_AGE= "age";
-    private static final String COLUMN_GENDER= "gender";
-    private static final String COLUMN_DATE = "date";
+    private static final String PATIENT_RECORD_TABLE = "PatientRecord";
+    private static final String PATIENT_ID_COLUMN = "_id";
+    private static final String PATIENT_NAME_COLUMN = "name";
+    private static final String PATIENT_AGE_COLUMN= "age";
+    private static final String PATIENT_GENDER_COLUMN= "gender";
+    private static final String PATIENT_DATE_COLUMN = "date";
+
+
+    private static final String VISIT_RECORD_TABLE = "VisitRecord";
+    private static final String VISIT_ID_COLUMN = "_id";
+    private static final String VISIT_PATIENT_ID_COLUMN = "patient_id";
+    private static final String VISIT_DATE_COLUMN = "date";
+    private static final String VISIT_HISTORY_COLUMN = "history";
+    private static final String VISIT_EXAMINATION_COLUMN = "examination";
+    private static final String VISIT_TREATMENT_COLUMN = "treatment";
 
     private final String 
         CREATE_PatientRecord_TABLE =
-            "CREATE TABLE " + TABLE_NAME +
-            " ("+ COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            COLUMN_NAME + " TEXT, " +
-            COLUMN_AGE + " INT, " +
-            COLUMN_GENDER + " TEXT, " +
-            COLUMN_DATE + " TEXT);" ;
+            "CREATE TABLE " + PATIENT_RECORD_TABLE +
+            " ("+ PATIENT_ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            PATIENT_NAME_COLUMN + " TEXT, " +
+            PATIENT_AGE_COLUMN + " INT, " +
+            PATIENT_GENDER_COLUMN + " TEXT, " +
+            PATIENT_DATE_COLUMN + " TEXT);" ;
+
+
+    private final String
+        CREATE_VisitRecord_TABLE =
+            "CREATE TABLE " + VISIT_RECORD_TABLE +
+                    "(" + VISIT_ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    VISIT_PATIENT_ID_COLUMN + " INTEGER, " +
+                    VISIT_DATE_COLUMN + " TEXT, " +
+                    VISIT_HISTORY_COLUMN + " TEXT ," +
+                    VISIT_EXAMINATION_COLUMN + " TEXT," +
+                    VISIT_TREATMENT_COLUMN + " TEXT ); " ;
+
 
 
     public MyDataBaseHelper(@Nullable Context context) {
@@ -42,14 +69,17 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
         db.execSQL(CREATE_PatientRecord_TABLE);
+        db.execSQL(CREATE_VisitRecord_TABLE);
 
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS "+ TABLE_NAME );
+        db.execSQL("DROP TABLE IF EXISTS "+ PATIENT_RECORD_TABLE );
+        db.execSQL("DROP TABLE IF EXISTS "+ VISIT_RECORD_TABLE );
         onCreate(db);
     }
 
@@ -60,7 +90,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
 
 
 
-        long result =   db.insert(TABLE_NAME,null ,patient.getContentValues());
+        long result =   db.insert(PATIENT_RECORD_TABLE,null ,patient.getContentValues());
         if(result == -1){
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
         }else{
@@ -68,10 +98,24 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void addVisit(Visit visit){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        long result = db.insert(VISIT_RECORD_TABLE,null,visit.getContentValues());
+        if (result == -1) {
+            Toast.makeText(context,"Failed",Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(context,"Added Successfully!", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
     // get all data from database
     public Cursor readPatient(){
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM "+ TABLE_NAME;
+        String query = "SELECT * FROM "+ PATIENT_RECORD_TABLE;
         ArrayList<Patient> patients = new ArrayList<>();
 
         Cursor cursor = null;
@@ -98,10 +142,10 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
          */
     }
 
-    // get all data from database
+    // read all patients record from database
     public ArrayList<Patient>   readPatients(){
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM "+ TABLE_NAME;
+        String query = "SELECT * FROM "+ PATIENT_RECORD_TABLE;
         ArrayList<Patient> patients = new ArrayList<>();
 
         Cursor cursor = null;
@@ -127,6 +171,66 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
     }
 
 
+    //read all visits from record
+    public ArrayList<Visit> readVisits(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + VISIT_RECORD_TABLE;
+        ArrayList<Visit> visits = new ArrayList<>();
+
+        Cursor cursor = null;
+        if (db != null) cursor = db.rawQuery(query,null);
+
+        while(cursor.moveToNext()){
+            visits.add(
+                new Visit(
+                    new Integer(cursor.getString(0)),
+                    new Integer(cursor.getString(1)),
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    cursor.getString(4),
+                    cursor.getString(5)
+                )
+            );
+
+
+        }
+
+        return visits;
+    }
+
+
+    //read visits of a patient from record
+    public ArrayList<Visit> readVisits(Patient patient){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + VISIT_RECORD_TABLE +
+               "WHERE " + VISIT_PATIENT_ID_COLUMN + " = " + patient.getID().toString();
+
+        ArrayList<Visit> visits = new ArrayList<>();
+
+        Cursor cursor = null;
+        if (db != null) cursor = db.rawQuery(query,null);
+
+        while(cursor.moveToNext()){
+            visits.add(
+                    new Visit(
+                            new Integer(cursor.getString(0)),
+                            new Integer(cursor.getString(1)),
+                            cursor.getString(2),
+                            cursor.getString(3),
+                            cursor.getString(4),
+                            cursor.getString(5)
+                    )
+            );
+
+
+        }
+
+        return visits;
+    }
+
+
+
+
 
 
     //get Patient by name
@@ -134,14 +238,14 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
-        String[] sqlSelect={COLUMN_ID,
-                COLUMN_NAME,
-                COLUMN_AGE,
-                COLUMN_GENDER,
-                COLUMN_DATE};
+        String[] sqlSelect={PATIENT_ID_COLUMN,
+                PATIENT_NAME_COLUMN,
+                PATIENT_AGE_COLUMN,
+                PATIENT_GENDER_COLUMN,
+                PATIENT_DATE_COLUMN};
 
-        qb.setTables(TABLE_NAME);
-        Cursor cursor = qb.query(db, sqlSelect, COLUMN_NAME + " LIKE ?",
+        qb.setTables(PATIENT_RECORD_TABLE);
+        Cursor cursor = qb.query(db, sqlSelect, PATIENT_NAME_COLUMN + " LIKE ?",
                 new String[]{"%"+name+"%"}, null, null, null);
 
         return cursor;
@@ -152,14 +256,14 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
         ArrayList<Patient> patients = new ArrayList<>();
 
-        String[] sqlSelect={COLUMN_ID,
-                COLUMN_NAME,
-                COLUMN_AGE,
-                COLUMN_GENDER,
-                COLUMN_DATE};
+        String[] sqlSelect={PATIENT_ID_COLUMN,
+                PATIENT_NAME_COLUMN,
+                PATIENT_AGE_COLUMN,
+                PATIENT_GENDER_COLUMN,
+                PATIENT_DATE_COLUMN};
 
-        qb.setTables(TABLE_NAME);
-        Cursor cursor = qb.query(db, sqlSelect, COLUMN_NAME + " LIKE ?",
+        qb.setTables(PATIENT_RECORD_TABLE);
+        Cursor cursor = qb.query(db, sqlSelect, PATIENT_NAME_COLUMN + " LIKE ?",
                 new String[]{"%"+name+"%"}, null, null, null);
 
         while (cursor.moveToNext()) {

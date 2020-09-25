@@ -20,6 +20,7 @@ public class AddActivity extends AppCompatActivity {
     private EditText name,age,gender;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

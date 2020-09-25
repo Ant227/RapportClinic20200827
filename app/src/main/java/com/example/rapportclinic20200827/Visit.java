@@ -1,3 +1,6 @@
+package com.example.rapportclinic20200827;
+
+
 import android.content.ContentValues;
 
 public class Visit {
