@@ -29,6 +29,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         this.context = context;
         this.patients = patients;
     }
+
+    public void setPatients(ArrayList<Patient> patients){
+        this.patients = patients;
+    }
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -50,10 +54,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             public void onClick(View v) {
                 Intent intent = new Intent(context, ProfileActivity.class);
 
-
-                intent.putExtra("name",patients.get(position).getName());
-                intent.putExtra("age",patients.get(position).getAge());
-                intent.putExtra("gender",patients.get(position).getSex());
+                intent.putExtra("patient",patients.get(position));
 
                 context.startActivity(intent);
             }

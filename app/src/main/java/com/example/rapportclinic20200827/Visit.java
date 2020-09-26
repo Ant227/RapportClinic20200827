@@ -3,7 +3,7 @@ package com.example.rapportclinic20200827;
 
 import android.content.ContentValues;
 
-public class Visit {
+public class Visit implements java.io.Serializable {
 	private Integer ID = null;
 	private Integer Patient_ID = null;
 	private String Date = null;

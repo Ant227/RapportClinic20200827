@@ -281,4 +281,25 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public ArrayList<Patient> queryPatients(String query){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<Patient> patients = new ArrayList<>();
+        Cursor cursor = db.rawQuery(query,null);
+        while (cursor.moveToNext()) {
+
+            patients.add(new Patient(
+                            new Integer(cursor.getString(0)),
+                            cursor.getString(1),
+                            new Integer(cursor.getString(2)),
+                            cursor.getString(3),
+                            cursor.getString(4)
+                    )
+            );
+        }
+        return patients;
+
+
+    }
+
 }

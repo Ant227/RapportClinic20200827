@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                     patients = myDb.readPatients();
+
                     mainRecyclerView.setAdapter(customAdapter);
 
 
@@ -115,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
                     patients.clear();
 
                     patients = myDb.getPatientsByName(s.toString());
+
                     mainRecyclerView.setAdapter(customAdapter);
                 }
             }
@@ -137,8 +139,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
+    protected void onResume(){
+        super.onResume();
+        patients = myDb.readPatients();
+        customAdapter = new CustomAdapter(this,patients);
+        mainRecyclerView.setAdapter(customAdapter);
+    }
 
 
 

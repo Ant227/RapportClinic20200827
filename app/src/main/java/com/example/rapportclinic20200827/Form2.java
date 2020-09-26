@@ -41,6 +41,7 @@ public class Form2 extends AppCompatActivity {
         descriptionText = findViewById(R.id.form2_description_text);
         sendBtn = findViewById(R.id.form2_send);
 
+
         checkForData();
 
 
