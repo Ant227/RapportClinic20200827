@@ -43,7 +43,8 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void profileAddNewVisitor(View view){
-        Intent intent = new Intent(ProfileActivity.this,Form2.class);
+        //Intent intent = new Intent(ProfileActivity.this,Form2.class);
+        Intent intent = new Intent(ProfileActivity.this,VisitActivity.class);
         startActivity(intent);
     }
 }
