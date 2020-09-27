@@ -6,10 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -19,10 +21,12 @@ import com.example.rapportclinic20200827.Patient;
 
 
 
-public class MyDataBaseHelper extends SQLiteOpenHelper {
+public class MyDataBaseHelper extends SQLiteOpenHelper  {
+
+    private static MyDataBaseHelper sInstance;
 
 
-    private Context context;
+    private static Context context;
     private static final String DATABASE_NAME = "RapportClinical.db";
     private static final int DATABASE_VERSION = 1;
     private static final String PATIENT_RECORD_TABLE = "PatientRecord";
@@ -61,9 +65,21 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
                     VISIT_EXAMINATION_COLUMN + " TEXT," +
                     VISIT_TREATMENT_COLUMN + " TEXT ); " ;
 
+    public static synchronized MyDataBaseHelper getInstance(Context context){
+
+        if(sInstance == null){
+            sInstance = new MyDataBaseHelper(context.getApplicationContext());
+
+        }
+
+        return  sInstance;
+    }
 
 
-    public MyDataBaseHelper(@Nullable Context context) {
+
+
+
+    private MyDataBaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -201,9 +217,14 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
 
     //read visits of a patient from record
     public ArrayList<Visit> readVisits(Patient patient){
+        System.out.println("before getting readble database");
+
         SQLiteDatabase db = this.getReadableDatabase();
+        System.out.println("after gettting readable database");
         String query = "SELECT * FROM " + VISIT_RECORD_TABLE +
-               "WHERE " + VISIT_PATIENT_ID_COLUMN + " = " + patient.getID().toString();
+               " WHERE   " + VISIT_PATIENT_ID_COLUMN + "  =  " + patient.getID().toString();
+        System.out.println(query);
+        Log.d("query message",query);
 
         ArrayList<Visit> visits = new ArrayList<>();
 

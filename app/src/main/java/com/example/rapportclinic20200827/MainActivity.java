@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Filter;
@@ -41,12 +42,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        System.out.println("hello world");
+        Log.d("debug", "hello world");
+
         mainRecyclerView = findViewById(R.id.main_recycler_view);
         materialSearchBar = findViewById(R.id.main_searchBar);
         fab = findViewById(R.id.floatingActionButton);
         nestedScrollView = findViewById(R.id.main_scroll);
 
-        myDb = new MyDataBaseHelper(this);
+        //myDb = new MyDataBaseHelper(this);
+        myDb = MyDataBaseHelper.getInstance(this);
 
 
         patients = myDb.readPatients();
@@ -150,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToAddActivity(View view){
         Intent intent = new Intent(MainActivity.this,AddActivity.class);
+
 
         startActivity(intent);
     }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.rapportclinic20200827.MyDataBaseHelper;
 import com.example.rapportclinic20200827.ProfileActivity;
 import com.example.rapportclinic20200827.R;
 
@@ -24,10 +25,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     private ArrayList<Patient> patients;
 
+    private MyDataBaseHelper myDb;
+
 
     public CustomAdapter(Context context,ArrayList<Patient> patients){
         this.context = context;
         this.patients = patients;
+
     }
 
     public void setPatients(ArrayList<Patient> patients){
@@ -39,6 +43,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.all_patient_layout,parent, false);
         return new MyViewHolder(view);
+
     }
 
     @Override
@@ -54,7 +59,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             public void onClick(View v) {
                 Intent intent = new Intent(context, ProfileActivity.class);
 
-                intent.putExtra("patient",patients.get(position));
+
+                intent.putExtra("patient", (Patient) patients.get(position));
+
+
+
 
                 context.startActivity(intent);
             }

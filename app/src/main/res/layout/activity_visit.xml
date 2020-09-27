@@ -14,51 +14,95 @@
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp">
 
-        <com.google.android.material.tabs.TabLayout
+        <TextView
+            android:id="@+id/patient_info"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:text="TextView" />
 
-            <com.google.android.material.tabs.TabItem
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/historyButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="History" />
 
-            <com.google.android.material.tabs.TabItem
+            <Button
+                android:id="@+id/examinationButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Examination" />
 
-            <com.google.android.material.tabs.TabItem
+            <Button
+                android:id="@+id/treatmentButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Treatment" />
-        </com.google.android.material.tabs.TabLayout>
+
+            <Button
+                android:id="@+id/saveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Save" />
+
+        </LinearLayout>
 
         <EditText
-            android:id="@+id/editTextTextMultiLine"
+            android:id="@+id/historyText"
             android:layout_width="match_parent"
-            android:layout_height="304dp"
+            android:layout_height="wrap_content"
             android:ems="10"
             android:gravity="start|top"
-            android:inputType="textMultiLine" />
+            android:hint="History"
+            android:inputType="textMultiLine"
+            android:maxLines="10"
+            android:minLines="10"
+            android:visibility="visible" />
 
-        <ScrollView
-            android:id="@+id/button_scroll_view"
+        <EditText
+            android:id="@+id/examinationText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="Examination"
+            android:inputType="textMultiLine"
+            android:maxLines="10"
+            android:minLines="10"
+            android:visibility="gone" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
-        </ScrollView>
+        <EditText
+            android:id="@+id/treatmentText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="Treatment"
+            android:inputType="textMultiLine"
+            android:maxLines="10"
+            android:minLines="10"
+            android:visibility="gone" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:id="@+id/button_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

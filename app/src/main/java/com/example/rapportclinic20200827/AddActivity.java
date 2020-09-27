@@ -19,7 +19,7 @@ public class AddActivity extends AppCompatActivity {
 
     private EditText name,age,gender;
 
-
+    private MyDataBaseHelper myDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +52,8 @@ public class AddActivity extends AppCompatActivity {
             String formattedDateString = dateformat.format(c);
 
 
-            MyDataBaseHelper myDB = new MyDataBaseHelper(AddActivity.this);
-            myDB.addPatient(new Patient(null,nameS,new Integer(ageS),genderS,formattedDateString));
+            myDb = MyDataBaseHelper.getInstance(this);
+            myDb.addPatient(new Patient(null,nameS,new Integer(ageS),genderS,formattedDateString));
 
             name.setText("");
             age.setText("");
