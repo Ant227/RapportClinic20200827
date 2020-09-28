@@ -50,23 +50,19 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         if(intent.hasExtra("patient")) {
-            Log.d("before cast","before cast");
+
             patient = (Patient) intent.getSerializableExtra("patient");
-            Log.d("Patient Name ", "Patient Name");
-            Log.d("Patient Name",patient.getName());
+
             if(patient != null) {
-                System.out.println("Patient is not null");
-                System.out.println(patient.toString());
+
                 visits = myDb.readVisits(patient);
             }
             if (visits != null) {
-                System.out.println("Visit is not null");
-                System.out.println(visits.toString());
-                System.out.println("Before visitcustomadaper");
+
                 visitcustomadapter = new VisitCustomAdapter(this, patient, visits);
 
 
-                System.out.println("Before visit recycler");
+
                 vist_recycler_view.setAdapter(visitcustomadapter);
             }
             nameTv.setText(patient.getName());
@@ -79,7 +75,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void profileAddNewVisitor(View view){
-        //Intent intent = new Intent(ProfileActivity.this,Form2.class);
+
         Intent intent = new Intent(ProfileActivity.this,VisitActivity.class);
         intent.putExtra("patient",patient);
 

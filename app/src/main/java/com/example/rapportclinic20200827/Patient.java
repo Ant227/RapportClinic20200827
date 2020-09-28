@@ -59,7 +59,18 @@ public class Patient implements java.io.Serializable{
 		this.Age = patient.getAge();
 		this.Sex = patient.getSex();
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Patient{" +
+				"ID=" + ID +
+				", Name='" + Name + '\'' +
+				", Age=" + Age +
+				", Sex='" + Sex + '\'' +
+				", Date='" + Date + '\'' +
+				'}';
+	}
+
 	public Integer getID(){
 		return ID;
 	}

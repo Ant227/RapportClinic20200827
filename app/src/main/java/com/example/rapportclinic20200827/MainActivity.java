@@ -42,15 +42,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        System.out.println("hello world");
-        Log.d("debug", "hello world");
+
 
         mainRecyclerView = findViewById(R.id.main_recycler_view);
         materialSearchBar = findViewById(R.id.main_searchBar);
         fab = findViewById(R.id.floatingActionButton);
         nestedScrollView = findViewById(R.id.main_scroll);
 
-        //myDb = new MyDataBaseHelper(this);
+
         myDb = MyDataBaseHelper.getInstance(this);
 
 
@@ -68,61 +67,43 @@ public class MainActivity extends AppCompatActivity {
         mainRecyclerView.setNestedScrollingEnabled(false);
 
 
-       materialSearchBar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-           @Override
-           public void onFocusChange(View v, boolean hasFocus) {
-               if(hasFocus){
-                   patients.clear();
-                   //patients = myDb.readPatients();
-                   mainRecyclerView.setAdapter(customAdapter);
-                  customAdapter.notifyDataSetChanged();
-               }
-               else{
-                   patients.clear();
 
-                   patients = myDb.readPatients();
-                   mainRecyclerView.setAdapter(customAdapter);
-               }
-           }
-       });
 
-       materialSearchBar.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               goToSearchActivity();
-           }
-       });
+
 
         materialSearchBar.addTextChangeListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+                Log.d("materialSearchBar :"," beforeTextChanged method called");
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                Log.d("materialSearchBar :"," OnTextChanged method called");
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
 
+                Log.d("materialSearchBar :"," afterTextChanged method called");
+                Log.d("afterTextChanged :", s.toString());
+
                 if(TextUtils.isEmpty(s.toString())){
+
                     patients.clear();
-
-
                     patients = myDb.readPatients();
-
-                    mainRecyclerView.setAdapter(customAdapter);
-
+                    customAdapter.setPatients(patients);
+                    customAdapter.notifyDataSetChanged();
 
                 }
                 else{
                     patients.clear();
-
                     patients = myDb.getPatientsByName(s.toString());
-
-                    mainRecyclerView.setAdapter(customAdapter);
+                    customAdapter.setPatients(patients);
+                    customAdapter.notifyDataSetChanged();
                 }
             }
         });
@@ -147,9 +128,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         patients = myDb.readPatients();
-        customAdapter = new CustomAdapter(this,patients);
+        customAdapter.setPatients(patients);
         mainRecyclerView.setAdapter(customAdapter);
     }
+
 
 
 
@@ -161,19 +143,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void goToSearchActivity(){
 
-
-        Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-        //intent.putExtra("patients",patients);
-
-        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this,
-                materialSearchBar,"searchBar");
-
-        startActivity(intent, options.toBundle());
-
-
-    }
 
     public void mainProfilePopup(View view){
 

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,6 +21,8 @@ public class AddActivity extends AppCompatActivity {
     private EditText name,age,gender;
 
     private MyDataBaseHelper myDb;
+    private Patient patient = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +33,7 @@ public class AddActivity extends AppCompatActivity {
         age = findViewById(R.id.add_age);
         gender = findViewById(R.id.add_gender);
 
-
+        myDb = MyDataBaseHelper.getInstance(this);
     }
 
     public void addData(View view){
@@ -52,23 +55,35 @@ public class AddActivity extends AppCompatActivity {
             String formattedDateString = dateformat.format(c);
 
 
-            myDb = MyDataBaseHelper.getInstance(this);
-            myDb.addPatient(new Patient(null,nameS,new Integer(ageS),genderS,formattedDateString));
+
+
+            patient = new Patient(null,nameS,new Integer(ageS),genderS,formattedDateString);
+            Log.d("New added Patient :",patient.toString());
+            myDb.addPatient(patient);
+            patient = myDb.getLastPatient();
+
+            Log.d("Afted adding Patient : ",patient.toString());
+
 
             name.setText("");
             age.setText("");
             gender.setText("");
 
-            Intent intent = new Intent(AddActivity.this,MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            Log.d("Before intent obj creation ","method addData, class addAcitvity");
+            Intent intent = new Intent(AddActivity.this,VisitActivity.class);
+
+            Log.d("After intent obj creation ","method addData, class addAcitvity");
+
+            intent.putExtra("patient",patient);
+            //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
 
         }
     }
 
     public void addNewVisitor(View view){
-        Intent intent = new Intent(AddActivity.this,Form2.class);
-        startActivity(intent);
+        //Intent intent = new Intent(AddActivity.this,Form2.class);
+        //startActivity(intent);
     }
 
 }

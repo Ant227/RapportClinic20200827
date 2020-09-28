@@ -26,7 +26,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
     private static MyDataBaseHelper sInstance;
 
 
-    private static Context context;
+    private Context context;
     private static final String DATABASE_NAME = "RapportClinical.db";
     private static final int DATABASE_VERSION = 1;
     private static final String PATIENT_RECORD_TABLE = "PatientRecord";
@@ -101,24 +101,30 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
 
     //add Patient data into Patient table of sqlite database
 
-    public void addPatient(Patient patient){
+    public long addPatient(Patient patient){
         SQLiteDatabase db = this.getWritableDatabase();
-
-
-
         long result =   db.insert(PATIENT_RECORD_TABLE,null ,patient.getContentValues());
+
+        return result;
+        /*
         if(result == -1){
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(context, "Added Successfully!", Toast.LENGTH_SHORT).show();
         }
+        */
     }
 
-    public void addVisit(Visit visit){
+    //add Visit to VisitRecord table in database
+
+    public long addVisit(Visit visit){
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         long result = db.insert(VISIT_RECORD_TABLE,null,visit.getContentValues());
+
+        return result;
+        /*
         if (result == -1) {
             Toast.makeText(context,"Failed",Toast.LENGTH_SHORT).show();
         }
@@ -126,37 +132,39 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
             Toast.makeText(context,"Added Successfully!", Toast.LENGTH_SHORT).show();
         }
 
+         */
+
     }
 
-    // get all data from database
-    public Cursor readPatient(){
+
+    public Patient getLastPatient(){
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM "+ PATIENT_RECORD_TABLE;
-        ArrayList<Patient> patients = new ArrayList<>();
+        String query = " SELECT * FROM PatientRecord ORDER BY _id DESC LIMIT 1 ";
+        Patient lastPatient = null;
 
         Cursor cursor = null;
-        if(db != null){
+        if (db != null){
             cursor = db.rawQuery(query,null);
         }
-        return cursor;
 
-        /*
+        if(cursor.moveToNext()) {
 
-
-        while (cursor.moveToNext()) {
-
-            patients.add(new Patient(
+             lastPatient = new Patient(
                     new Integer(cursor.getString(0)),
                     cursor.getString(1),
                     new Integer(cursor.getString(2)),
                     cursor.getString(3),
                     cursor.getString(4)
-                    )
             );
+        }
+        Log.d("getLastPatient : ",lastPatient.toString());
 
-          return patients;
-         */
+        return lastPatient;
+
+
+
     }
+
 
     // read all patients record from database
     public ArrayList<Patient>   readPatients(){
@@ -217,14 +225,13 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
 
     //read visits of a patient from record
     public ArrayList<Visit> readVisits(Patient patient){
-        System.out.println("before getting readble database");
+
 
         SQLiteDatabase db = this.getReadableDatabase();
-        System.out.println("after gettting readable database");
+
         String query = "SELECT * FROM " + VISIT_RECORD_TABLE +
                " WHERE   " + VISIT_PATIENT_ID_COLUMN + "  =  " + patient.getID().toString();
-        System.out.println(query);
-        Log.d("query message",query);
+
 
         ArrayList<Visit> visits = new ArrayList<>();
 

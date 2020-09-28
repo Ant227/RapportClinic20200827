@@ -75,7 +75,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     public int getItemCount() {
 
 
-        return patients.size();
+            return patients.size();
+
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

@@ -86,20 +86,20 @@
         android:background="@color/white"/>
 
 
-
     <TextView
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
         android:layout_marginRight="32dp"
-        android:padding="8dp"
-        android:elevation="6dp"
         android:background="@drawable/clinic_edit_text_border"
-        android:text="Add a new visit"
         android:drawableRight="@drawable/right_arraw_small"
+        android:elevation="6dp"
         android:onClick="addNewVisitor"
-        android:textColor="@color/colorRapport"/>
+        android:padding="8dp"
+        android:text="Add a new visit"
+        android:textColor="@color/colorRapport"
+        android:visibility="gone" />
 
 </LinearLayout>
