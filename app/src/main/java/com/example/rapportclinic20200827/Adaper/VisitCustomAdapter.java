@@ -2,6 +2,7 @@ package com.example.rapportclinic20200827.Adaper;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +63,7 @@ public class VisitCustomAdapter extends RecyclerView.Adapter<VisitCustomAdapter.
 
                 intent.putExtra("visit",visits.get(position));
                 intent.putExtra("patient",patient);
+                Log.d("Visist info ",visits.get(position).toString());
 
 
 

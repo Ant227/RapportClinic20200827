@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,6 +39,8 @@ public class ProfileActivity extends AppCompatActivity {
         intent = getIntent();
 
 
+
+
         nameTv = findViewById(R.id.profile_name);
         ageGenderTv =findViewById(R.id.profile_age);
         vist_recycler_view = findViewById(R.id.visit_recycler_view);
@@ -60,19 +63,61 @@ public class ProfileActivity extends AppCompatActivity {
             if (visits != null) {
 
                 visitcustomadapter = new VisitCustomAdapter(this, patient, visits);
+                vist_recycler_view.setAdapter(visitcustomadapter);
+            }
+            nameTv.setText(patient.getName());
+            ageGenderTv.setText(patient.getAge() + "Y0, "+patient.getSex());
+        };
 
 
 
+        /*
+        OnBackPressedCallback callback = new OnBackPressedCallback(true ) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+
+
+
+                Intent intent = new Intent(ProfileActivity.this,MainActivity.class);
+                startActivity(intent);
+
+
+            }
+
+
+        };
+        */
+
+
+
+
+    }
+
+
+
+    public void onResume(){
+        super.onResume();
+        intent = getIntent();
+        if(intent.hasExtra("patient")) {
+
+            patient = (Patient) intent.getSerializableExtra("patient");
+
+            if(patient != null) {
+
+                visits = myDb.readVisits(patient);
+            }
+            if (visits != null) {
+
+                visitcustomadapter = new VisitCustomAdapter(this, patient, visits);
                 vist_recycler_view.setAdapter(visitcustomadapter);
             }
             nameTv.setText(patient.getName());
             ageGenderTv.setText(patient.getAge() + "Y0, "+patient.getSex());
         }
-        ;
-
-
-
     }
+
+
 
     public void profileAddNewVisitor(View view){
 

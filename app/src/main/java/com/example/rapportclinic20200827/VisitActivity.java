@@ -127,12 +127,32 @@ public class VisitActivity extends AppCompatActivity {
 
                 myDb.addVisit(visit);
 
+
                 Intent myIntent = new Intent(VisitActivity.this,ProfileActivity.class);
-                myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+
+                myIntent.putExtra("patient",patient);
+
                 startActivity(myIntent);
+                finish();
 
             }
         });
 
+
+
     }
+
+
+
+
+    /*
+    public void onBackPressed(){
+
+        Intent intent = new Intent(VisitActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+    */
+
 }

@@ -28,13 +28,13 @@
                 android:text="TextView" />
 
             <TextView
-                android:id="@+id/examinationTextView"
+                android:id="@+id/historyTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
 
             <TextView
-                android:id="@+id/historyTextView"
+                android:id="@+id/examinationTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView" />

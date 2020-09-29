@@ -127,4 +127,16 @@ public class Patient implements java.io.Serializable{
 	public void setDate(String Date){
 		this.Date = Date;
 	}
+
+	public void Save(){
+		//Save patient to database
+	}
+
+	public void Update(){
+		//update patient to database
+	}
+
+	public void Delete(){
+		//delete patient from database
+	}
 }

@@ -83,6 +83,17 @@ public class Visit implements java.io.Serializable {
 
 	}
 
+	@Override
+	public String toString() {
+		return "Visit{" +
+				"ID=" + ID +
+				", Patient_ID=" + Patient_ID +
+				", Date='" + Date + '\'' +
+				", History='" + History + '\'' +
+				", Examination='" + Examination + '\'' +
+				", Treatment='" + Treatment + '\'' +
+				'}';
+	}
 
 	public Integer getID(){
 		return this.ID;

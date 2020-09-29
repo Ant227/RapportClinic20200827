@@ -21,7 +21,7 @@ public class AddActivity extends AppCompatActivity {
     private EditText name,age,gender;
 
     private MyDataBaseHelper myDb;
-    private Patient patient = null;
+    private Patient patient ;
 
 
     @Override
@@ -58,11 +58,11 @@ public class AddActivity extends AppCompatActivity {
 
 
             patient = new Patient(null,nameS,new Integer(ageS),genderS,formattedDateString);
-            Log.d("New added Patient :",patient.toString());
+
             myDb.addPatient(patient);
             patient = myDb.getLastPatient();
 
-            Log.d("Afted adding Patient : ",patient.toString());
+
 
 
             name.setText("");
@@ -75,8 +75,9 @@ public class AddActivity extends AppCompatActivity {
             Log.d("After intent obj creation ","method addData, class addAcitvity");
 
             intent.putExtra("patient",patient);
-            //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
             startActivity(intent);
+            finish();
 
         }
     }

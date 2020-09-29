@@ -169,7 +169,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
     // read all patients record from database
     public ArrayList<Patient>   readPatients(){
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM "+ PATIENT_RECORD_TABLE;
+        String query = " SELECT * FROM PatientRecord ORDER BY _id DESC ";
         ArrayList<Patient> patients = new ArrayList<>();
 
         Cursor cursor = null;
@@ -177,7 +177,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
             cursor = db.rawQuery(query,null);
         }
 
-
+        /*
 
         while (cursor.moveToNext()) {
 
@@ -190,6 +190,19 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
                     )
             );
         }
+        */
+        while (cursor.moveToNext()) {
+
+            patients.add(new Patient(
+                            cursor.getInt(0),
+                            cursor.getString(1),
+                            cursor.getInt(2),
+                            cursor.getString(3),
+                            cursor.getString(4)
+                    )
+            );
+        }
+
           return patients;
 
     }
@@ -207,8 +220,8 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
         while(cursor.moveToNext()){
             visits.add(
                 new Visit(
-                    new Integer(cursor.getString(0)),
-                    new Integer(cursor.getString(1)),
+                    cursor.getInt(0),
+                    cursor.getInt(1),
                     cursor.getString(2),
                     cursor.getString(3),
                     cursor.getString(4),
@@ -241,8 +254,8 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
         while(cursor.moveToNext()){
             visits.add(
                     new Visit(
-                            new Integer(cursor.getString(0)),
-                            new Integer(cursor.getString(1)),
+                            cursor.getInt(0),
+                            cursor.getInt(1),
                             cursor.getString(2),
                             cursor.getString(3),
                             cursor.getString(4),
@@ -261,23 +274,6 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
 
 
 
-    //get Patient by name
-    public Cursor getPatientByName(String name){
-        SQLiteDatabase db = this.getReadableDatabase();
-        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-
-        String[] sqlSelect={PATIENT_ID_COLUMN,
-                PATIENT_NAME_COLUMN,
-                PATIENT_AGE_COLUMN,
-                PATIENT_GENDER_COLUMN,
-                PATIENT_DATE_COLUMN};
-
-        qb.setTables(PATIENT_RECORD_TABLE);
-        Cursor cursor = qb.query(db, sqlSelect, PATIENT_NAME_COLUMN + " LIKE ?",
-                new String[]{"%"+name+"%"}, null, null, null);
-
-        return cursor;
-    }
 
     public ArrayList<Patient> getPatientsByName(String name){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -297,9 +293,9 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
         while (cursor.moveToNext()) {
 
             patients.add(new Patient(
-                            new Integer(cursor.getString(0)),
+                            cursor.getInt(0),
                             cursor.getString(1),
-                            new Integer(cursor.getString(2)),
+                            cursor.getInt(2),
                             cursor.getString(3),
                             cursor.getString(4)
                     )
@@ -317,9 +313,9 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
         while (cursor.moveToNext()) {
 
             patients.add(new Patient(
-                            new Integer(cursor.getString(0)),
+                            cursor.getInt(0),
                             cursor.getString(1),
-                            new Integer(cursor.getString(2)),
+                            cursor.getInt(2),
                             cursor.getString(3),
                             cursor.getString(4)
                     )
