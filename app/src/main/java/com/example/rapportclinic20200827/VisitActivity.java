@@ -128,12 +128,14 @@ public class VisitActivity extends AppCompatActivity {
                 myDb.addVisit(visit);
 
 
-                Intent myIntent = new Intent(VisitActivity.this,ProfileActivity.class);
 
 
-                myIntent.putExtra("patient",patient);
+                //Intent myIntent = new Intent(VisitActivity.this,ProfileActivity.class);
 
-                startActivity(myIntent);
+
+                //myIntent.putExtra("patient",patient);
+
+                //startActivity(myIntent);
                 finish();
 
             }
@@ -144,15 +146,5 @@ public class VisitActivity extends AppCompatActivity {
     }
 
 
-
-
-    /*
-    public void onBackPressed(){
-
-        Intent intent = new Intent(VisitActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
-    */
 
 }

@@ -69,10 +69,10 @@ public class AddActivity extends AppCompatActivity {
             age.setText("");
             gender.setText("");
 
-            Log.d("Before intent obj creation ","method addData, class addAcitvity");
+
             Intent intent = new Intent(AddActivity.this,VisitActivity.class);
 
-            Log.d("After intent obj creation ","method addData, class addAcitvity");
+
 
             intent.putExtra("patient",patient);
 

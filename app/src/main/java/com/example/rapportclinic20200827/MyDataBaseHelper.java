@@ -106,13 +106,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
         long result =   db.insert(PATIENT_RECORD_TABLE,null ,patient.getContentValues());
 
         return result;
-        /*
-        if(result == -1){
-            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(context, "Added Successfully!", Toast.LENGTH_SHORT).show();
-        }
-        */
+
     }
 
     //add Visit to VisitRecord table in database
@@ -124,15 +118,9 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
         long result = db.insert(VISIT_RECORD_TABLE,null,visit.getContentValues());
 
         return result;
-        /*
-        if (result == -1) {
-            Toast.makeText(context,"Failed",Toast.LENGTH_SHORT).show();
-        }
-        else{
-            Toast.makeText(context,"Added Successfully!", Toast.LENGTH_SHORT).show();
-        }
 
-         */
+
+
 
     }
 
@@ -177,20 +165,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
             cursor = db.rawQuery(query,null);
         }
 
-        /*
 
-        while (cursor.moveToNext()) {
-
-            patients.add(new Patient(
-                    new Integer(cursor.getString(0)),
-                    cursor.getString(1),
-                    new Integer(cursor.getString(2)),
-                    cursor.getString(3),
-                    cursor.getString(4)
-                    )
-            );
-        }
-        */
         while (cursor.moveToNext()) {
 
             patients.add(new Patient(
@@ -211,7 +186,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
     //read all visits from record
     public ArrayList<Visit> readVisits(){
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM " + VISIT_RECORD_TABLE;
+        String query = "SELECT * FROM " + VISIT_RECORD_TABLE + " ORDER BY _id DESC ";
         ArrayList<Visit> visits = new ArrayList<>();
 
         Cursor cursor = null;
@@ -239,11 +214,14 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
     //read visits of a patient from record
     public ArrayList<Visit> readVisits(Patient patient){
 
-
+        //Log.d(" message : ", "readVisits method before sql")
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = "SELECT * FROM " + VISIT_RECORD_TABLE +
-               " WHERE   " + VISIT_PATIENT_ID_COLUMN + "  =  " + patient.getID().toString();
+               " WHERE   " + VISIT_PATIENT_ID_COLUMN + "  =  "
+                + patient.getID().toString() + " ORDER BY _id DESC ";
+
+        Log.d(" readVisits query String : ",query);
 
 
         ArrayList<Visit> visits = new ArrayList<>();

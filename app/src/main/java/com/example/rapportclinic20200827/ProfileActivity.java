@@ -32,10 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
         myDb = MyDataBaseHelper.getInstance(this);
-
-
         intent = getIntent();
 
 
@@ -71,23 +68,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-        /*
-        OnBackPressedCallback callback = new OnBackPressedCallback(true ) {
-            @Override
-            public void handleOnBackPressed() {
-                // Handle the back button event
 
-
-
-                Intent intent = new Intent(ProfileActivity.this,MainActivity.class);
-                startActivity(intent);
-
-
-            }
-
-
-        };
-        */
 
 
 
@@ -98,23 +79,18 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void onResume(){
         super.onResume();
-        intent = getIntent();
-        if(intent.hasExtra("patient")) {
 
-            patient = (Patient) intent.getSerializableExtra("patient");
+        if(patient != null) {
 
-            if(patient != null) {
-
-                visits = myDb.readVisits(patient);
-            }
-            if (visits != null) {
-
-                visitcustomadapter = new VisitCustomAdapter(this, patient, visits);
-                vist_recycler_view.setAdapter(visitcustomadapter);
-            }
-            nameTv.setText(patient.getName());
-            ageGenderTv.setText(patient.getAge() + "Y0, "+patient.getSex());
+            visits = myDb.readVisits(patient);
         }
+        if (visits != null) {
+
+            visitcustomadapter = new VisitCustomAdapter(this, patient, visits);
+            vist_recycler_view.setAdapter(visitcustomadapter);
+        }
+        nameTv.setText(patient.getName());
+        ageGenderTv.setText(patient.getAge() + "Y0, "+patient.getSex());
     }
 
 
