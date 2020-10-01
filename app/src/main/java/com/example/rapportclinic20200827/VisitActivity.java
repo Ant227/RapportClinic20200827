@@ -3,13 +3,17 @@ package com.example.rapportclinic20200827;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Guideline;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -39,7 +43,31 @@ public class VisitActivity extends AppCompatActivity {
     private EditText historyText, examinationText, treatmentText;
     private TextView patient_info;
 
+    private String examSuggest [] = {"Blood Pressure - ",
+                                        "90/60 mmHg",
+                                        "100/70 mmHg",
+                                        "110/70 mmHg",
+                                        "120/80 mmHg",
+                                        "130/90 mmHg",
+                                        "140/90 mmHg",
+            "SpO2 - ",
+            "99 % on air ",
+            "97 % on air ",
+            "95 % on air",
+            "93 % on air "
+    };
 
+    private Button examButtons[];
+
+
+    private void createButtons(ViewGroup viewgroup){
+        examButtons = new Button[examSuggest.length];
+        for(int i = 0; i< examSuggest.length; i++){
+            examButtons[i] = new Button(this);
+            examButtons[i].setText(examSuggest[i]);
+            viewgroup.addView(examButtons[i]);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +100,20 @@ public class VisitActivity extends AppCompatActivity {
         history = "hello world!";
 
 
-        button_container = findViewById(R.id.button_container);
+        //button_container = findViewById(R.id.button_container);
 
 
         //button_container.addView(myBt[0]);
-        button_container.addView(myBt[0]);
-        button_container.addView(myBt[1]);
+        //button_container.addView(myBt[0]);
+        //button_container.addView(myBt[1]);
+
+        LinearLayout test = findViewById(R.id.test_relative_layout);
+
+        createButtons(test);
+
+        //RelativeLayout layout = new RelativeLayout(this);
+
+        //layout.setLayoutMode(RelativeLayout.ALIGN_LEFT);
 
 
         historyButton.setOnClickListener(new View.OnClickListener(){
@@ -126,16 +162,6 @@ public class VisitActivity extends AppCompatActivity {
                 );
 
                 myDb.addVisit(visit);
-
-
-
-
-                //Intent myIntent = new Intent(VisitActivity.this,ProfileActivity.class);
-
-
-                //myIntent.putExtra("patient",patient);
-
-                //startActivity(myIntent);
                 finish();
 
             }

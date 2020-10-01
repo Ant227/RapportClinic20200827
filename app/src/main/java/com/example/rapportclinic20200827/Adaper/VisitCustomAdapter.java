@@ -27,7 +27,7 @@ public class VisitCustomAdapter extends RecyclerView.Adapter<VisitCustomAdapter.
     private Patient patient;
 
     private ArrayList<Visit> visits;
-
+    private int visitCount;
 
     public VisitCustomAdapter(Context context,
                               Patient patient,
@@ -35,10 +35,12 @@ public class VisitCustomAdapter extends RecyclerView.Adapter<VisitCustomAdapter.
         this.context = context;
         this.patient = patient;
         this.visits = visits;
+        visitCount = visits.size();
     }
 
     public void setVisits(ArrayList<Visit> visits){
         this.visits = visits;
+        visitCount = visits.size();
     }
     @NonNull
     @Override
@@ -55,6 +57,12 @@ public class VisitCustomAdapter extends RecyclerView.Adapter<VisitCustomAdapter.
 
         holder.name.setText(patient.getName());
         holder.date.setText(visits.get(position).getDate());
+        String visitInfo = visits.get(position).getHistory().split("\n")[0];
+        if(visitInfo.length()>20)
+            visitInfo = visitInfo.substring(0,17) + "...";
+        holder.visit_info.setText(visitInfo);
+        int visitNumber = visitCount-position;
+        holder.visit_number.setText("Visit #" + visitNumber);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,13 +90,15 @@ public class VisitCustomAdapter extends RecyclerView.Adapter<VisitCustomAdapter.
 
     public class VisitViewHolder extends RecyclerView.ViewHolder {
 
-        TextView name , date;
+        TextView name , date, visit_info, visit_number;
 
         public VisitViewHolder(@NonNull View itemView) {
             super(itemView);
 
             name = itemView.findViewById(R.id.all_patient_name);
             date = itemView.findViewById(R.id.all_patient_date);
+            visit_info = itemView.findViewById(R.id.visit_info);
+            visit_number = itemView.findViewById(R.id.total_visit_number);
         }
     }
 

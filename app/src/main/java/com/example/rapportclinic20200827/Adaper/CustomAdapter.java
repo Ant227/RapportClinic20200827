@@ -66,6 +66,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             ArrayList<Visit> visits = myDb.readVisits(patient);
             Visit lastVisit = visits.get(0);
             String visitInfo = lastVisit.getHistory().split("\n")[0];
+            if(visitInfo.length()>20)
+                 visitInfo = visitInfo.substring(0,17) + "...";
             int visitCount = visits.size();
             Log.d("Patient : ",patient.toString());
             Log.d("Number of Visits : ","" + visitCount);

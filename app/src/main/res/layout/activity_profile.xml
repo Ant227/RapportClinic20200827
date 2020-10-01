@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,9 +10,14 @@
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="216dp"
-        android:background="@color/colorRapport">
+        android:layout_width="wrap_content"
+        android:layout_height="177dp"
+        android:background="@color/colorRapport"
+        android:paddingBottom="48dp"
+        tools:layout_conversion_absoluteHeight="378dp"
+        tools:layout_conversion_absoluteWidth="411dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/profile_image"
@@ -110,10 +116,6 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <TextView
 
         android:id="@+id/textView10"
@@ -124,24 +126,24 @@
         android:elevation="6dp"
         android:onClick="profileAddNewVisitor"
         android:padding="8dp"
+        android:paddingTop="48dp"
+        android:paddingBottom="48dp"
         android:text="Add a new visit"
-        android:textColor="@color/colorRapport" />
+        android:textColor="@color/colorRapport"
+        tools:layout_conversion_absoluteHeight="40dp"
+        tools:layout_conversion_absoluteWidth="134dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="378dp" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/visit_recycler_view"
-            android:layout_width="413dp"
-            android:layout_height="371dp"
-            android:layout_gravity="bottom" />
-
-    </FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/visit_recycler_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_conversion_absoluteHeight="194dp"
+        tools:layout_conversion_absoluteWidth="40dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="418dp" />
 
 
 </LinearLayout>

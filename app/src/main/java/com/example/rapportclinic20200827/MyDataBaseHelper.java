@@ -211,6 +211,11 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
     }
 
 
+    public void test(){
+
+
+    }
+
     //read visits of a patient from record
     public ArrayList<Visit> readVisits(Patient patient){
 
