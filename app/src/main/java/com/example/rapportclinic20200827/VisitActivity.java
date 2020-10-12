@@ -6,10 +6,12 @@ import androidx.constraintlayout.widget.Guideline;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
@@ -42,6 +44,7 @@ public class VisitActivity extends AppCompatActivity {
     private Button historyButton, examinationButton, treatmentButton, saveButton;
     private EditText historyText, examinationText, treatmentText;
     private TextView patient_info;
+    private int defaultColor,hightlightColor;
 
     private String examSuggest [] = {"Blood Pressure - ",
                                         "90/60 mmHg",
@@ -57,7 +60,13 @@ public class VisitActivity extends AppCompatActivity {
             "93 % on air "
     };
 
+    private CheckBox  []symptomCheckBoxs;
+
+
+    private String [] sympotms = {"Fever", "Cough", "LOA", "LOW","Murmur"};
+
     private Button examButtons[];
+    private symptomClickListener listener;
 
 
     private void createButtons(ViewGroup viewgroup){
@@ -68,6 +77,49 @@ public class VisitActivity extends AppCompatActivity {
             viewgroup.addView(examButtons[i]);
         }
     }
+
+    private void createSymptomCheckBoxs(ViewGroup viewgroup){
+        listener = new symptomClickListener();
+        symptomCheckBoxs = new CheckBox[sympotms.length];
+
+        for(int i = 0; i<sympotms.length; i++){
+            symptomCheckBoxs[i]=new CheckBox(this);
+            symptomCheckBoxs[i].setText(sympotms[i]);
+            viewgroup.addView(symptomCheckBoxs[i]);
+            symptomCheckBoxs[i].setOnClickListener(listener);
+        }
+    }
+
+    private class symptomClickListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View view) {
+            onCheckBoxClicked(view);
+        }
+
+        public void onCheckBoxClicked(View view){
+
+            CheckBox symptomCheckBox = (CheckBox) view;
+            String symptom = symptomCheckBox.getText().toString();
+            boolean checked = symptomCheckBox.isChecked();
+            history = historyText.getText().toString();
+            if(checked) {
+
+                history = history.replace("\n" + symptom + " (+) \n", "");
+                history = history.replace("\n" + symptom + " (-) \n", "");
+                history = history + "\n" + symptom + " (+) \n";
+                history.trim();
+                historyText.setText(history);
+            }
+            else {
+                history = history.replace(symptom + " (+)",symptom + " (-)");
+                history.trim();
+                historyText.setText(history);
+            }
+        }
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +133,19 @@ public class VisitActivity extends AppCompatActivity {
         examinationText = findViewById(R.id.examinationText);
         treatmentText = findViewById(R.id.treatmentText);
 
+        defaultColor = historyButton.getCurrentTextColor();
+        hightlightColor = Color.RED;
 
+
+
+
+
+
+
+
+
+
+        historyButton.setTextColor(hightlightColor);
 
         patient_info = findViewById(R.id.patient_info);
 
@@ -109,7 +173,9 @@ public class VisitActivity extends AppCompatActivity {
 
         LinearLayout test = findViewById(R.id.test_relative_layout);
 
-        createButtons(test);
+        createSymptomCheckBoxs(test);
+
+        //createButtons(test);
 
         //RelativeLayout layout = new RelativeLayout(this);
 
@@ -123,6 +189,10 @@ public class VisitActivity extends AppCompatActivity {
                 historyText.setVisibility(View.VISIBLE);
                 examinationText.setVisibility(View.GONE);
                 treatmentText.setVisibility(View.GONE);
+
+                historyButton.setTextColor(hightlightColor);
+                examinationButton.setTextColor(defaultColor);
+                treatmentButton.setTextColor(defaultColor);
             }
         });
 
@@ -132,6 +202,10 @@ public class VisitActivity extends AppCompatActivity {
                 examinationText.setVisibility(View.VISIBLE);
                 historyText.setVisibility(View.GONE);
                 treatmentText.setVisibility(View.GONE);
+
+                historyButton.setTextColor(defaultColor);
+                examinationButton.setTextColor(hightlightColor);
+                treatmentButton.setTextColor(defaultColor);
             }
         });
 
@@ -141,6 +215,10 @@ public class VisitActivity extends AppCompatActivity {
                 treatmentText.setVisibility(View.VISIBLE);
                 historyText.setVisibility(View.GONE);
                 examinationText.setVisibility(View.GONE);
+
+                historyButton.setTextColor(defaultColor);
+                examinationButton.setTextColor(defaultColor);
+                treatmentButton.setTextColor(hightlightColor);
             }
         });
 

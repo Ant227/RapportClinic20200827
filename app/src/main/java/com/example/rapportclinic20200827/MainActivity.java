@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
         patients = myDb.readPatients();
 
+
+
         customAdapter = new CustomAdapter(this,patients);
 
 

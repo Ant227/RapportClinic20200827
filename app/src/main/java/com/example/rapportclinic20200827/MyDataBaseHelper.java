@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import java.io.Serializable;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -36,6 +36,16 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
     private static final String PATIENT_GENDER_COLUMN= "gender";
     private static final String PATIENT_DATE_COLUMN = "date";
 
+    private final String
+            CREATE_PatientRecord_TABLE =
+            "CREATE TABLE " + PATIENT_RECORD_TABLE +
+                    " ("+ PATIENT_ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    PATIENT_NAME_COLUMN + " TEXT, " +
+                    PATIENT_AGE_COLUMN + " INT, " +
+                    PATIENT_GENDER_COLUMN + " TEXT, " +
+                    PATIENT_DATE_COLUMN + " TEXT);" ;
+
+
 
     private static final String VISIT_RECORD_TABLE = "VisitRecord";
     private static final String VISIT_ID_COLUMN = "_id";
@@ -44,17 +54,6 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
     private static final String VISIT_HISTORY_COLUMN = "history";
     private static final String VISIT_EXAMINATION_COLUMN = "examination";
     private static final String VISIT_TREATMENT_COLUMN = "treatment";
-
-    private final String 
-        CREATE_PatientRecord_TABLE =
-            "CREATE TABLE " + PATIENT_RECORD_TABLE +
-            " ("+ PATIENT_ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            PATIENT_NAME_COLUMN + " TEXT, " +
-            PATIENT_AGE_COLUMN + " INT, " +
-            PATIENT_GENDER_COLUMN + " TEXT, " +
-            PATIENT_DATE_COLUMN + " TEXT);" ;
-
-
     private final String
         CREATE_VisitRecord_TABLE =
             "CREATE TABLE " + VISIT_RECORD_TABLE +
@@ -109,6 +108,25 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
 
     }
 
+    public long Insert(Patient patient){
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result =   db.insert(PATIENT_RECORD_TABLE,null ,patient.getContentValues());
+
+        return result;
+
+    }
+
+    public long Insert(Visit visit){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        long result = db.insert(VISIT_RECORD_TABLE,null,visit.getContentValues());
+
+        return result;
+
+    }
+
+
     //add Visit to VisitRecord table in database
 
     public long addVisit(Visit visit){
@@ -145,7 +163,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
                     cursor.getString(4)
             );
         }
-        Log.d("getLastPatient : ",lastPatient.toString());
+
 
         return lastPatient;
 

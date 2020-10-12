@@ -6,6 +6,9 @@ import android.content.ContentValues;
 public class Visit implements java.io.Serializable {
 	private Integer ID = null;
 	private Integer Patient_ID = null;
+	private Integer Clinic_ID = null;
+	private Integer Doctor_ID = null;
+	private Integer Previous_Visit_ID = null;
 	private String Date = null;
 	private String History = null;
 	private String Examination = null;
