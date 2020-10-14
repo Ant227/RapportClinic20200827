@@ -64,6 +64,12 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
                     VISIT_EXAMINATION_COLUMN + " TEXT," +
                     VISIT_TREATMENT_COLUMN + " TEXT ); " ;
 
+
+
+
+
+
+
     public static synchronized MyDataBaseHelper getInstance(Context context){
 
         if(sInstance == null){
@@ -237,14 +243,14 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
     //read visits of a patient from record
     public ArrayList<Visit> readVisits(Patient patient){
 
-        //Log.d(" message : ", "readVisits method before sql")
+
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = "SELECT * FROM " + VISIT_RECORD_TABLE +
                " WHERE   " + VISIT_PATIENT_ID_COLUMN + "  =  "
                 + patient.getID().toString() + " ORDER BY _id DESC ";
 
-        Log.d(" readVisits query String : ",query);
+
 
 
         ArrayList<Visit> visits = new ArrayList<>();

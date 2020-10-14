@@ -1,15 +1,17 @@
 package com.example.rapportclinic20200827;
 
 import android.content.ContentValues;
+import lombok.Getter;
+import lombok.Setter;
 
 
 public class Patient implements java.io.Serializable{
 	
-	private Integer ID = null;
-	private String Name = null;
-	private Integer Age = null;
-	private String Sex = null;
-	private String Date = null;
+	@Getter @Setter private Integer ID = null;
+	@Getter @Setter private String Name = null;
+	@Getter @Setter private Integer Age = null;
+	@Getter @Setter private String Sex = null;
+	@Getter @Setter private String Date = null;
 	
 	public Patient() {
 	}
@@ -71,25 +73,7 @@ public class Patient implements java.io.Serializable{
 				'}';
 	}
 
-	public Integer getID(){
-		return ID;
-	}
-	
-	public String getName(){
-		return Name;
-	}
-	
-	public Integer getAge(){
-		return Age;
-	}
-	
-	public String getSex(){
-		return Sex;
-	}
 
-	public String getDate(){
-		return Date;
-	}
 
 	public ContentValues getContentValues(){
 
@@ -103,29 +87,6 @@ public class Patient implements java.io.Serializable{
 		cv.put("date", this.Date);
 
 		return cv;
-	}
-
-
-
-
-	public void setID(Integer ID){
-		this.ID = ID;
-	}
-	
-	public void setName(String Name) {
-		this.Name = Name;
-	}
-	
-	public void setAge(Integer Age) {
-		this.Age = Age;
-	}
-	
-	public void setSex(String Sex) {
-		this.Sex = Sex;
-	}
-
-	public void setDate(String Date){
-		this.Date = Date;
 	}
 
 	public void Save(){

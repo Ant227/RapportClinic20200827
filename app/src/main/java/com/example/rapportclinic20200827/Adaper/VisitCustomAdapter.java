@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.rapportclinic20200827.Doctor;
 import com.example.rapportclinic20200827.ProfileActivity;
 import com.example.rapportclinic20200827.R;
 
@@ -73,6 +74,9 @@ public class VisitCustomAdapter extends RecyclerView.Adapter<VisitCustomAdapter.
                 intent.putExtra("patient",patient);
                 Log.d("Visist info ",visits.get(position).toString());
 
+                //Doctor doctor = new Doctor();
+                //doctor = new Doctor(32,"Hello","MBBS");
+                //visits.get(position).
 
 
                 context.startActivity(intent);

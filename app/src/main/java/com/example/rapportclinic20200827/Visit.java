@@ -2,17 +2,19 @@ package com.example.rapportclinic20200827;
 
 
 import android.content.ContentValues;
+import lombok.Getter;
+import lombok.Setter;
 
 public class Visit implements java.io.Serializable {
-	private Integer ID = null;
-	private Integer Patient_ID = null;
-	private Integer Clinic_ID = null;
-	private Integer Doctor_ID = null;
-	private Integer Previous_Visit_ID = null;
-	private String Date = null;
-	private String History = null;
-	private String Examination = null;
-	private String Treatment = null;
+	@Getter @Setter private Integer ID = null;
+	@Getter @Setter private Integer Patient_ID = null;
+	@Getter @Setter private Integer Doctor_ID = null;
+	@Getter @Setter private Integer Clinic_ID = null;
+	@Getter @Setter private Integer Previous_Visit_ID = null;
+	@Getter @Setter private String Date = null;
+	@Getter @Setter private String History = null;
+	@Getter @Setter private String Examination = null;
+	@Getter @Setter private String Treatment = null;
 	
 
 
@@ -98,51 +100,5 @@ public class Visit implements java.io.Serializable {
 				'}';
 	}
 
-	public Integer getID(){
-		return this.ID;
-	}
 
-	public Integer getPatient_ID(){
-		return this.Patient_ID;
-	}
-
-	public String getDate(){
-		return this.Date;
-	}
-
-	public String getHistory(){
-		return this.History;
-	}
-
-	public String getExamination(){
-		return this.Examination;
-	}
-
-	public String getTreatment(){
-		return this.Treatment;
-	}
-	
-	public void setID(Integer ID){
-		this.ID = ID;
-	}
-
-	public void setPatient_ID(Integer Patient_ID){
-		this.Patient_ID = Patient_ID;
-	}
-
-	public void setDate(String Date){
-		this.Date = Date;
-	}
-
-	public void setHistory(String History){
-		this.History = History;
-	}
-
-	public void setExamination(String Examination){
-		this.Examination = Examination;
-	}
-
-	public void setTreatment(String Treatment){
-		this.Treatment = Treatment;
-	}
 }

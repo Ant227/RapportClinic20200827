@@ -5,19 +5,83 @@ Database File Name : "RapportClinical.db"
 
 	Table Name : "PatientRecord"
 		
-		Fileds : 	"_id",		primary key,int
-				"name",	text
+		Fields :
+		        "_id",		primary key,int
+				"name",	    text
 				"age",		int
 				"gender",	text
-				"date" 	text
+				"date" 	    text
 			
 		
 	
 	Table Name : "VisitRecord"
 		
-		Fileds :	"_id",		primary key,int
+		Fields :
+		        "_id",  		primary key,int
 				"patient_id",	foregin key,int
-				"date",	text
-				"history",	text
+				"doctor_id"     int
+				"clinic_id"     int
+				"date",	        text
+				"history",  	text
 				"examination",	text
 				"treatment",	text
+
+
+	Table Name : "DoctorRecord"
+
+	    Fields :
+	            "_id",      primary key, int
+	            "name"      text
+	            "qualifications"    text
+
+	Table Name : "ClinicRecord"
+
+	    Fields :
+	            "_id",      primary key, int
+	            "name"      text
+	            "address"   text
+	            "phone_no"  text
+
+
+	Table Name : "BillRecord"
+
+	    Fields :
+	            "_id",          primary key,int
+	            "visit_id"      int
+	            "patient_id"    int
+	            "doctor_id"     int
+	            "clinic_id"     int
+	            "date"          text
+	            "total_price"   int
+
+
+	Table Name : "BillItemRecord"
+
+	    Fields :
+	            "_id"       primary key,int
+	            "bill_id"    int
+	            "item_description"      text
+	            "item_qty"              int
+	            "price_per_item"        int
+	            "price"                 int
+
+
+	Table Name : "DrugRecord"
+
+	    Fields :
+	            "_id",              primary key, int
+	            "brand_name",       text
+	            "generic_name"      text
+	            "company_name"      text
+	            "form"              text
+	            "per_card"          text
+	            "per_package"       text
+	            "category"          text
+
+    Table Name : "StockRecord"
+
+        Fields :
+                "_id"           primary key, int
+                "drug_id"       int
+                "date"          text
+                "stock_entry"   text

@@ -4,10 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Guideline;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.view.GestureDetectorCompat;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.InputDevice;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -67,6 +72,28 @@ public class VisitActivity extends AppCompatActivity {
 
     private Button examButtons[];
     private symptomClickListener listener;
+    private SymptomTouchListener symptomTouchListener;
+    private GestureDetectorCompat mDetector;
+
+    class SymptomTouchListener extends GestureDetector.SimpleOnGestureListener{
+
+        View view;
+
+        public SymptomTouchListener(View view){
+            this.view=view;
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            Log.d("e1 :",e1.toString());
+            Log.d("e2 : ", e2.toString());
+            Log.d("velocity X : ",velocityX+"");
+            Log.d("velocity Y : ", velocityY + "");
+            Log.d("View : ",view.toString());
+
+            return super.onFling(e1, e2, velocityX, velocityY);
+        }
+    }
 
 
     private void createButtons(ViewGroup viewgroup){
@@ -80,6 +107,7 @@ public class VisitActivity extends AppCompatActivity {
 
     private void createSymptomCheckBoxs(ViewGroup viewgroup){
         listener = new symptomClickListener();
+
         symptomCheckBoxs = new CheckBox[sympotms.length];
 
         for(int i = 0; i<sympotms.length; i++){
@@ -87,6 +115,8 @@ public class VisitActivity extends AppCompatActivity {
             symptomCheckBoxs[i].setText(sympotms[i]);
             viewgroup.addView(symptomCheckBoxs[i]);
             symptomCheckBoxs[i].setOnClickListener(listener);
+
+
         }
     }
 
