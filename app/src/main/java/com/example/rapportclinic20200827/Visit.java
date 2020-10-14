@@ -16,7 +16,7 @@ public class Visit implements java.io.Serializable {
 	@Getter @Setter private String Examination = null;
 	@Getter @Setter private String Treatment = null;
 	
-
+	/*
 
 	public Visit(ContentValues cv){
 		this.ID = cv.getAsInteger("_id");
@@ -26,8 +26,17 @@ public class Visit implements java.io.Serializable {
 		this.Examination = cv.getAsString("examination");
 		this.Treatment = cv.getAsString("treatment");
 	}
-	
-	
+	*/
+
+	public Visit(ContentValues cv){
+		this.ID = cv.getAsInteger(MyDataBaseHelper.VISIT_ID_COLUMN);
+		this.Patient_ID = cv.getAsInteger(MyDataBaseHelper.VISIT_PATIENT_ID_COLUMN);
+		this.Date = cv.getAsString(MyDataBaseHelper.VISIT_DATE_COLUMN);
+		this.History = cv.getAsString(MyDataBaseHelper.VISIT_HISTORY_COLUMN);
+		this.Examination = cv.getAsString(MyDataBaseHelper.VISIT_EXAMINATION_COLUMN);
+		this.Treatment = cv.getAsString(MyDataBaseHelper.VISIT_TREATMENT_COLUMN);
+	}
+
 	public Visit(){
 		
 	}
@@ -71,7 +80,7 @@ public class Visit implements java.io.Serializable {
 		this.Examination = Examination;
 		this.Treatment = Treatment;
 	}
-
+	/*
 	public ContentValues getContentValues(){
 		ContentValues cv = new ContentValues();
 
@@ -82,6 +91,22 @@ public class Visit implements java.io.Serializable {
 		cv.put("history", this.History);
 		cv.put("examination", this.Examination);
 		cv.put("treatment",this.Treatment);
+
+		return cv;
+
+
+	}
+	*/
+	public ContentValues getContentValues(){
+		ContentValues cv = new ContentValues();
+
+		if (this.ID != null) cv.put(MyDataBaseHelper.VISIT_ID_COLUMN,this.ID);
+		if (this.Patient_ID != null) cv.put(MyDataBaseHelper.VISIT_PATIENT_ID_COLUMN, this.Patient_ID);
+
+		cv.put(MyDataBaseHelper.VISIT_DATE_COLUMN,this.Date);
+		cv.put(MyDataBaseHelper.VISIT_HISTORY_COLUMN, this.History);
+		cv.put(MyDataBaseHelper.VISIT_EXAMINATION_COLUMN, this.Examination);
+		cv.put(MyDataBaseHelper.VISIT_TREATMENT_COLUMN,this.Treatment);
 
 		return cv;
 

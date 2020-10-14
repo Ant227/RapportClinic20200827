@@ -72,6 +72,7 @@ public class VisitCustomAdapter extends RecyclerView.Adapter<VisitCustomAdapter.
 
                 intent.putExtra("visit",visits.get(position));
                 intent.putExtra("patient",patient);
+                intent.putExtra("visit_info",holder.visit_number.getText());
                 Log.d("Visist info ",visits.get(position).toString());
 
                 //Doctor doctor = new Doctor();

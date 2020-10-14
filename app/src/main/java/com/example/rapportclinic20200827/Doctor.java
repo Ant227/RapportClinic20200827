@@ -18,16 +18,16 @@ public class Doctor implements java.io.Serializable {
 
 
     public Doctor(ContentValues cv){
-        this.ID = cv.getAsInteger("_id");
-        this.Name = cv.getAsString("name");
-        this.Qualifications = cv.getAsString("qualifications");
+        this.ID = cv.getAsInteger(MyDataBaseHelper.DOCTOR_ID_COLUMN);
+        this.Name = cv.getAsString(MyDataBaseHelper.DOCTOR_NAME_COLUMN);
+        this.Qualifications = cv.getAsString(MyDataBaseHelper.DOCTOR_QUALIFICATIONS_COLUMN);
     }
 
     public ContentValues getContentValues(){
         ContentValues cv = new ContentValues();
-        if(this.ID != null) cv.put("_id", this.ID);
-        cv.put("name",this.Name);
-        cv.put("qualificatins",this.Qualifications);
+        if(this.ID != null) cv.put(MyDataBaseHelper.DOCTOR_ID_COLUMN, this.ID);
+        cv.put(MyDataBaseHelper.DOCTOR_NAME_COLUMN,this.Name);
+        cv.put(MyDataBaseHelper.DOCTOR_QUALIFICATIONS_COLUMN,this.Qualifications);
         return cv;
     }
 

@@ -58,12 +58,12 @@ Database File Name : "RapportClinical.db"
 	Table Name : "BillItemRecord"
 
 	    Fields :
-	            "_id"       primary key,int
-	            "bill_id"    int
-	            "item_description"      text
-	            "item_quantity"         int
-	            "price_per_item"        int
-	            "price"                 int
+	            "_id"               primary key,int
+	            "bill_id"           int
+	            "description"       text
+	            "quantity"          int
+	            "price_per_item"    int
+	            "price"             int
 
 
 	Table Name : "DrugRecord"

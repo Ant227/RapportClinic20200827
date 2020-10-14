@@ -1,5 +1,7 @@
 package com.example.rapportclinic20200827;
 
+import com.example.rapportclinic20200827.MyDataBaseHelper;
+
 import android.content.ContentValues;
 import lombok.Getter;
 import lombok.Setter;
@@ -46,14 +48,27 @@ public class Patient implements java.io.Serializable{
 		this.Date = Date;
 	}
 
+	/*
 	public Patient(ContentValues cv){
 		this.ID = cv.getAsInteger("_id");
 		this.Name = cv.getAsString("name");
 		this.Age = cv.getAsInteger("age");
 		this.Sex = cv.getAsString("gender");
 		this.Date = cv.getAsString("date");
-	}
 
+
+	}
+	*/
+
+	public Patient(ContentValues cv){
+		this.ID = cv.getAsInteger(MyDataBaseHelper.PATIENT_ID_COLUMN);
+		this.Name = cv.getAsString(MyDataBaseHelper.PATIENT_NAME_COLUMN);
+		this.Age = cv.getAsInteger(MyDataBaseHelper.PATIENT_AGE_COLUMN);
+		this.Sex = cv.getAsString(MyDataBaseHelper.PATIENT_GENDER_COLUMN);
+		this.Date = cv.getAsString(MyDataBaseHelper.PATIENT_DATE_COLUMN);
+
+
+	}
 
 	public Patient(Patient patient) {
 		this.ID = patient.getID();
@@ -73,7 +88,7 @@ public class Patient implements java.io.Serializable{
 				'}';
 	}
 
-
+	/*
 
 	public ContentValues getContentValues(){
 
@@ -88,6 +103,21 @@ public class Patient implements java.io.Serializable{
 
 		return cv;
 	}
+	*/
+	public ContentValues getContentValues(){
+
+		ContentValues cv = new ContentValues();
+
+		if (this.ID != null) cv.put(MyDataBaseHelper.PATIENT_ID_COLUMN,this.ID);
+
+		cv.put(MyDataBaseHelper.PATIENT_NAME_COLUMN, this.Name);
+		cv.put(MyDataBaseHelper.PATIENT_AGE_COLUMN, this.Age);
+		cv.put(MyDataBaseHelper.PATIENT_GENDER_COLUMN, this.Sex);
+		cv.put(MyDataBaseHelper.PATIENT_DATE_COLUMN, this.Date);
+
+		return cv;
+	}
+
 
 	public void Save(){
 		//Save patient to database

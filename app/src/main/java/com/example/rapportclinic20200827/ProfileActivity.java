@@ -1,5 +1,6 @@
 package com.example.rapportclinic20200827;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,7 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
     private RecyclerView vist_recycler_view;
     private VisitCustomAdapter visitcustomadapter;
     private ArrayList<Visit> visits = null;
-
+    private AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +77,41 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
+    public void deletePatient(View view){
 
+        builder = new AlertDialog.Builder(view.getContext());
+
+        builder.setMessage("Do you want to delete patient?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        MyDataBaseHelper.getInstance().delete(patient);
+
+                        Toast.makeText(view.getContext().getApplicationContext(),patient.getName()+ " has been deleted.",Toast.LENGTH_LONG).show();
+                        Log.d("Delete Patient Called . ","method called");
+                        finish();
+
+
+
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //  Action for 'NO' Button
+                        dialog.cancel();
+
+                    }
+                });
+
+        AlertDialog alert = builder.create();
+
+        alert.setTitle("Warning");
+        alert.show();
+        /*
+
+
+        */
+    }
 
     public void onResume(){
         super.onResume();

@@ -27,33 +27,71 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
 
 
     private Context context;
-    private static final String DATABASE_NAME = "RapportClinical.db";
-    private static final int DATABASE_VERSION = 1;
-    private static final String PATIENT_RECORD_TABLE = "PatientRecord";
-    private static final String PATIENT_ID_COLUMN = "_id";
-    private static final String PATIENT_NAME_COLUMN = "name";
-    private static final String PATIENT_AGE_COLUMN= "age";
-    private static final String PATIENT_GENDER_COLUMN= "gender";
-    private static final String PATIENT_DATE_COLUMN = "date";
 
+    public static final String DATABASE_NAME = "RapportClinical.db";
+    private static final int DATABASE_VERSION = 1;
+
+
+    public static final String PATIENT_RECORD_TABLE = "PatientRecord";
+    public static final String PATIENT_ID_COLUMN = "_id";
+    public static final String PATIENT_NAME_COLUMN = "name";
+    public static final String PATIENT_AGE_COLUMN = "age";
+    public static final String PATIENT_GENDER_COLUMN = "gender";
+    public static final String PATIENT_DATE_COLUMN = "date";
     private final String
             CREATE_PatientRecord_TABLE =
             "CREATE TABLE " + PATIENT_RECORD_TABLE +
-                    " ("+ PATIENT_ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    " (" + PATIENT_ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     PATIENT_NAME_COLUMN + " TEXT, " +
                     PATIENT_AGE_COLUMN + " INT, " +
                     PATIENT_GENDER_COLUMN + " TEXT, " +
-                    PATIENT_DATE_COLUMN + " TEXT);" ;
+                    PATIENT_DATE_COLUMN + " TEXT);";
 
 
+    public static final String DOCTOR_RECORD_TABLE = "DoctorRecord";
+    public static final String DOCTOR_ID_COLUMN   = "_id";
+    public static final String DOCTOR_NAME_COLUMN = "name";
+    public static final String DOCTOR_QUALIFICATIONS_COLUMN = "qualifications";
 
-    private static final String VISIT_RECORD_TABLE = "VisitRecord";
-    private static final String VISIT_ID_COLUMN = "_id";
-    private static final String VISIT_PATIENT_ID_COLUMN = "patient_id";
-    private static final String VISIT_DATE_COLUMN = "date";
-    private static final String VISIT_HISTORY_COLUMN = "history";
-    private static final String VISIT_EXAMINATION_COLUMN = "examination";
-    private static final String VISIT_TREATMENT_COLUMN = "treatment";
+    private final String
+        CREATE_DoctorRecord_TABLE =
+            "CREATE TABLE " + DOCTOR_RECORD_TABLE +
+                    " (" + DOCTOR_ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    DOCTOR_NAME_COLUMN + " TEXT, " +
+                    DOCTOR_QUALIFICATIONS_COLUMN + " TEXT); ";
+
+
+    public static final String CLINIC_RECORD_TABLE = "ClinicRecord";
+    public static final String CLINIC_ID_COLUMN = "_id";
+    public static final String CLINIC_NAME_COLUMN = "name";
+    public static final String CLINIC_ADDRESS_COLUMN = "address";
+    public static final String CLINIC_PHONE_NO_COLUMN = "phone_no";
+
+    public static final String BILL_RECORD_TABLE = "BillRecord";
+    public static final String BILL_ID_COLUMN = "_id";
+    public static final String BILL_VISIT_ID_COLUMN = "visit_id";
+    public static final String BILL_PATIENT_ID_COLUMN = "patient_id";
+    public static final String BILL_DOCTOR_ID_COLUMN = "doctor_id";
+    public static final String BILL_CLINIC_ID_COLUMN = "clinic_id";
+    public static final String BILL_DATE_COLUMN = "date";
+    public static final String BILL_TOTAL_PRICE_COLUMN = "total_price";
+
+    public static final String BILL_ITEM_RECORD_TABLE = "BillItemRecord";
+    public static final String BILL_ITEM_ID_COLUMN = "_id";
+    public static final String BILL_ITEM_BILL_ID_COLUMN = "bill_id";
+    public static final String BILL_ITEM_DESCRIPTION_COLUMN = "description";
+    public static final String BILL_ITEM_QUANTITY_COLUMN = "quantity";
+    public static final String BILL_ITEM_PRICE_PER_ITEM_COLUMN = "price_per_item";
+    public static final String BILL_ITEM_PRICE_COLUMN = "price";
+
+
+    public static final String VISIT_RECORD_TABLE = "VisitRecord";
+    public static final String VISIT_ID_COLUMN = "_id";
+    public static final String VISIT_PATIENT_ID_COLUMN = "patient_id";
+    public static final String VISIT_DATE_COLUMN = "date";
+    public static final String VISIT_HISTORY_COLUMN = "history";
+    public static final String VISIT_EXAMINATION_COLUMN = "examination";
+    public static final String VISIT_TREATMENT_COLUMN = "treatment";
     private final String
         CREATE_VisitRecord_TABLE =
             "CREATE TABLE " + VISIT_RECORD_TABLE +
@@ -116,6 +154,32 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
         return result;
 
 
+    }
+
+    public int delete(Patient patient){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+
+        String where =PATIENT_ID_COLUMN + "=?";
+
+        int numberOfEntriesDeleted = db.delete(PATIENT_RECORD_TABLE,where,new String[]{patient.getID().toString()});
+        //delete patient data PatientRecord Table
+
+        int numberOfVisitsDeleted = db.delete(VISIT_RECORD_TABLE,VISIT_PATIENT_ID_COLUMN +"=?",new String[]{patient.getID().toString()});
+        //delete all visits of patient from VisitRecord Table
+
+        Log.d("Number of Entry Deleted Successfully : ",numberOfEntriesDeleted+"");
+        return numberOfEntriesDeleted;
+    }
+
+    public int delete(Visit visit){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String where = VISIT_ID_COLUMN +"=?";
+        int numberOfEntriesDeleted = db.delete(VISIT_RECORD_TABLE,where, new String[]{visit.getID().toString()});
+
+
+        Log.d("Number of Entry Deleted Successfully : ",numberOfEntriesDeleted+"");
+        return numberOfEntriesDeleted;
     }
 
     //insert Visit to VisitRecord table in database
