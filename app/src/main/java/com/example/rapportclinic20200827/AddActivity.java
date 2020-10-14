@@ -59,7 +59,7 @@ public class AddActivity extends AppCompatActivity {
 
             patient = new Patient(null,nameS,new Integer(ageS),genderS,formattedDateString);
 
-            myDb.addPatient(patient);
+            myDb.insert(patient);
             patient = myDb.getLastPatient();
 
 

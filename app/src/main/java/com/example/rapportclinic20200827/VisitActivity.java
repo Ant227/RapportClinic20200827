@@ -269,7 +269,7 @@ public class VisitActivity extends AppCompatActivity {
                         treatmentText.getText().toString()
                 );
 
-                myDb.addVisit(visit);
+                myDb.insert(visit);
                 finish();
 
             }

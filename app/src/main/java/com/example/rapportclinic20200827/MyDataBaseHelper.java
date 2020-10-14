@@ -80,7 +80,9 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
         return  sInstance;
     }
 
-
+    public static synchronized MyDataBaseHelper getInstance(){
+         return sInstance;
+    }
 
 
 
@@ -104,25 +106,21 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
         onCreate(db);
     }
 
-    //add Patient data into Patient table of sqlite database
+    //insert Patient data into Patient table of sqlite database
 
-    public long addPatient(Patient patient){
+
+    public long insert(Patient patient){
         SQLiteDatabase db = this.getWritableDatabase();
         long result =   db.insert(PATIENT_RECORD_TABLE,null ,patient.getContentValues());
 
         return result;
 
-    }
-
-    public long Insert(Patient patient){
-        SQLiteDatabase db = this.getWritableDatabase();
-        long result =   db.insert(PATIENT_RECORD_TABLE,null ,patient.getContentValues());
-
-        return result;
 
     }
 
-    public long Insert(Visit visit){
+    //insert Visit to VisitRecord table in database
+
+    public long insert(Visit visit){
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -133,20 +131,8 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
     }
 
 
-    //add Visit to VisitRecord table in database
-
-    public long addVisit(Visit visit){
-
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        long result = db.insert(VISIT_RECORD_TABLE,null,visit.getContentValues());
-
-        return result;
 
 
-
-
-    }
 
 
     public Patient getLastPatient(){
@@ -162,9 +148,9 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
         if(cursor.moveToNext()) {
 
              lastPatient = new Patient(
-                    new Integer(cursor.getString(0)),
+                    cursor.getInt(0),
                     cursor.getString(1),
-                    new Integer(cursor.getString(2)),
+                    cursor.getInt(2),
                     cursor.getString(3),
                     cursor.getString(4)
             );
@@ -235,10 +221,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
     }
 
 
-    public void test(){
 
-
-    }
 
     //read visits of a patient from record
     public ArrayList<Visit> readVisits(Patient patient){

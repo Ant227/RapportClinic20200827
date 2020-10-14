@@ -61,7 +61,7 @@ Database File Name : "RapportClinical.db"
 	            "_id"       primary key,int
 	            "bill_id"    int
 	            "item_description"      text
-	            "item_qty"              int
+	            "item_quantity"         int
 	            "price_per_item"        int
 	            "price"                 int
 

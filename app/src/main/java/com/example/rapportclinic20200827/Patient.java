@@ -91,6 +91,7 @@ public class Patient implements java.io.Serializable{
 
 	public void Save(){
 		//Save patient to database
+		MyDataBaseHelper.getInstance().insert(this);
 	}
 
 	public void Update(){
