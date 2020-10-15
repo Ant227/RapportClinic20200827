@@ -26,23 +26,23 @@ public class BillItem implements java.io.Serializable {
     }
 
     public BillItem(ContentValues cv){
-        this.ID = cv.getAsInteger("_id");
-        this.Bill_ID = cv.getAsInteger("bill_id");
-        this.Description = cv.getAsString("description");
-        this.Quantity = cv.getAsInteger("quantity");
-        this.Price_Per_Item = cv.getAsInteger("price_per_item");
-        this.Price = cv.getAsInteger("price");
+        this.ID = cv.getAsInteger(MyDataBaseHelper.BILL_ITEM_ID_COLUMN);
+        this.Bill_ID = cv.getAsInteger(MyDataBaseHelper.BILL_ITEM_BILL_ID_COLUMN);
+        this.Description = cv.getAsString(MyDataBaseHelper.BILL_ITEM_DESCRIPTION_COLUMN);
+        this.Quantity = cv.getAsInteger(MyDataBaseHelper.BILL_ITEM_QUANTITY_COLUMN);
+        this.Price_Per_Item = cv.getAsInteger(MyDataBaseHelper.BILL_ITEM_PRICE_PER_ITEM_COLUMN);
+        this.Price = cv.getAsInteger(MyDataBaseHelper.BILL_ITEM_PRICE_COLUMN);
 
     }
 
     public ContentValues getContentValues(){
         ContentValues cv = new ContentValues();
-        if(this.ID != null) cv.put("_id",this.ID);
-        cv.put("bill_id",this.Bill_ID);
-        cv.put("description", this.Description);
-        cv.put("quantity", this.Quantity);
-        cv.put("price_per_item", this.Price_Per_Item);
-        cv.put("price", this.Price);
+        if(this.ID != null) cv.put(MyDataBaseHelper.BILL_ITEM_ID_COLUMN,this.ID);
+        cv.put(MyDataBaseHelper.BILL_ITEM_BILL_ID_COLUMN,this.Bill_ID);
+        cv.put(MyDataBaseHelper.BILL_ITEM_DESCRIPTION_COLUMN, this.Description);
+        cv.put(MyDataBaseHelper.BILL_ITEM_QUANTITY_COLUMN, this.Quantity);
+        cv.put(MyDataBaseHelper.BILL_ITEM_PRICE_PER_ITEM_COLUMN, this.Price_Per_Item);
+        cv.put(MyDataBaseHelper.BILL_ITEM_PRICE_COLUMN, this.Price);
 
         return cv;
     }

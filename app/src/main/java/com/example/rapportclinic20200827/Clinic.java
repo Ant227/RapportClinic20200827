@@ -18,19 +18,19 @@ public class Clinic implements java.io.Serializable {
     @Getter @Setter private String Phone_No;
 
     public Clinic(ContentValues cv){
-        this.ID = cv.getAsInteger("_id");
-        this.Name = cv.getAsString("name");
-        this.Address = cv.getAsString("address");
-        this.Phone_No = cv.getAsString("phone_no");
+        this.ID = cv.getAsInteger(MyDataBaseHelper.CLINIC_ID_COLUMN);
+        this.Name = cv.getAsString(MyDataBaseHelper.CLINIC_NAME_COLUMN);
+        this.Address = cv.getAsString(MyDataBaseHelper.CLINIC_ADDRESS_COLUMN);
+        this.Phone_No = cv.getAsString(MyDataBaseHelper.CLINIC_PHONE_NO_COLUMN);
     }
 
 
     public ContentValues getContentValues(){
         ContentValues cv = new ContentValues();
-        if(this.ID != null) cv.put("_id",this.ID);
-        cv.put("name",this.Name);
-        cv.put("address", this.Address);
-        cv.put("phone_no",this.Phone_No);
+        if(this.ID != null) cv.put(MyDataBaseHelper.CLINIC_ID_COLUMN,this.ID);
+        cv.put(MyDataBaseHelper.CLINIC_NAME_COLUMN,this.Name);
+        cv.put(MyDataBaseHelper.CLINIC_ADDRESS_COLUMN, this.Address);
+        cv.put(MyDataBaseHelper.CLINIC_PHONE_NO_COLUMN,this.Phone_No);
         return cv;
     }
 }

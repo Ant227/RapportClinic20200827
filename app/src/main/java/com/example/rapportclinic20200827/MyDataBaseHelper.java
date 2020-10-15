@@ -38,10 +38,9 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
     public static final String PATIENT_AGE_COLUMN = "age";
     public static final String PATIENT_GENDER_COLUMN = "gender";
     public static final String PATIENT_DATE_COLUMN = "date";
-    private final String
-            CREATE_PatientRecord_TABLE =
+    private final String CREATE_PatientRecord_TABLE =
             "CREATE TABLE " + PATIENT_RECORD_TABLE +
-                    " (" + PATIENT_ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            " (" + PATIENT_ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     PATIENT_NAME_COLUMN + " TEXT, " +
                     PATIENT_AGE_COLUMN + " INT, " +
                     PATIENT_GENDER_COLUMN + " TEXT, " +
@@ -52,11 +51,9 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
     public static final String DOCTOR_ID_COLUMN   = "_id";
     public static final String DOCTOR_NAME_COLUMN = "name";
     public static final String DOCTOR_QUALIFICATIONS_COLUMN = "qualifications";
-
-    private final String
-        CREATE_DoctorRecord_TABLE =
+    private final String CREATE_DoctorRecord_TABLE =
             "CREATE TABLE " + DOCTOR_RECORD_TABLE +
-                    " (" + DOCTOR_ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            " (" + DOCTOR_ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     DOCTOR_NAME_COLUMN + " TEXT, " +
                     DOCTOR_QUALIFICATIONS_COLUMN + " TEXT); ";
 
@@ -66,6 +63,12 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
     public static final String CLINIC_NAME_COLUMN = "name";
     public static final String CLINIC_ADDRESS_COLUMN = "address";
     public static final String CLINIC_PHONE_NO_COLUMN = "phone_no";
+    private final String CREATE_ClinicRecord_TABLE =
+            "CREATE TABLE " + CLINIC_RECORD_TABLE +
+            " (" + CLINIC_ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    CLINIC_NAME_COLUMN + " TEXT, " +
+                    CLINIC_ADDRESS_COLUMN + " TEXT, " +
+                    CLINIC_PHONE_NO_COLUMN + " TEXT ); ";
 
     public static final String BILL_RECORD_TABLE = "BillRecord";
     public static final String BILL_ID_COLUMN = "_id";
@@ -75,6 +78,17 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
     public static final String BILL_CLINIC_ID_COLUMN = "clinic_id";
     public static final String BILL_DATE_COLUMN = "date";
     public static final String BILL_TOTAL_PRICE_COLUMN = "total_price";
+    private final String CREATE_BillRecord_TABLE =
+            "CREATE TABLE " + BILL_RECORD_TABLE +
+                    " (" + BILL_ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    BILL_VISIT_ID_COLUMN + " INTEGER, " +
+                    BILL_PATIENT_ID_COLUMN + " INTEGER, " +
+                    BILL_DOCTOR_ID_COLUMN + " INTEGER, " +
+                    BILL_CLINIC_ID_COLUMN + " INTEGER, " +
+                    BILL_DATE_COLUMN + " TEXT, " +
+                    BILL_TOTAL_PRICE_COLUMN + " INTEGER ); " ;
+
+
 
     public static final String BILL_ITEM_RECORD_TABLE = "BillItemRecord";
     public static final String BILL_ITEM_ID_COLUMN = "_id";
@@ -83,6 +97,14 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
     public static final String BILL_ITEM_QUANTITY_COLUMN = "quantity";
     public static final String BILL_ITEM_PRICE_PER_ITEM_COLUMN = "price_per_item";
     public static final String BILL_ITEM_PRICE_COLUMN = "price";
+    private final String CREATE_BillItemRecord_TABLE =
+            "CREATE TABLE " + BILL_ITEM_RECORD_TABLE +
+                    " (" + BILL_ITEM_ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    BILL_ITEM_BILL_ID_COLUMN + " INTEGER, " +
+                    BILL_ITEM_DESCRIPTION_COLUMN + " TEXT, " +
+                    BILL_ITEM_QUANTITY_COLUMN + " INTEGER, " +
+                    BILL_ITEM_PRICE_PER_ITEM_COLUMN + " INTEGER, " +
+                    BILL_ITEM_PRICE_COLUMN + " INTEGER ); ";
 
 
     public static final String VISIT_RECORD_TABLE = "VisitRecord";
@@ -95,13 +117,45 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
     private final String
         CREATE_VisitRecord_TABLE =
             "CREATE TABLE " + VISIT_RECORD_TABLE +
-                    "(" + VISIT_ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    " (" + VISIT_ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     VISIT_PATIENT_ID_COLUMN + " INTEGER, " +
                     VISIT_DATE_COLUMN + " TEXT, " +
                     VISIT_HISTORY_COLUMN + " TEXT ," +
                     VISIT_EXAMINATION_COLUMN + " TEXT," +
                     VISIT_TREATMENT_COLUMN + " TEXT ); " ;
 
+
+    public static final String DRUG_RECORD_TABLE = "DrugRecord";
+    public static final String DRUG_ID_COLUMN = "_id";
+    public static final String DRUG_BRAND_NAME_COLUMN = "brand_name";
+    public static final String DRUG_GENERIC_NAME_COLUMN = "generic_name";
+    public static final String DRUG_COMPANY_INFO_COLUMN = "company_info";
+    public static final String DRUG_FORM_COLUMN = "form";
+    public static final String DRUG_PER_CARD_COLUMN = "per_card";
+    public static final String DRUG_PER_PACKAGE_COLUMN = "per_package";
+    public static final String DRUG_CATEGORY_COLUMN = "category";
+    private final String CREATE_DrugRecord_TABLE =
+            "CREATE TABLE " + DRUG_RECORD_TABLE +
+                    " (" + DRUG_ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    DRUG_BRAND_NAME_COLUMN + " TEXT, " +
+                    DRUG_GENERIC_NAME_COLUMN + " TEXT, " +
+                    DRUG_COMPANY_INFO_COLUMN + " TEXT, " +
+                    DRUG_FORM_COLUMN + " TEXT, " +
+                    DRUG_PER_CARD_COLUMN + " INTEGER, " +
+                    DRUG_PER_PACKAGE_COLUMN + " INTEGER, " +
+                    DRUG_CATEGORY_COLUMN + " TEXT ); " ;
+
+    public static final String STOCK_RECORD_TABLE = "StockRecord";
+    public static final String STOCK_ID_COLUMN = "_id";
+    public static final String STOCK_DRUG_ID_COLUMN = "drug_id";
+    public static final String STOCK_DATE_COLUMN = "date";
+    public static final String STOCK_STOCK_ENTRY_COLUMN = "stock_entry";
+    private final String CREATE_StockRecord_TABLE =
+            "CREATE TABLE " + STOCK_RECORD_TABLE +
+                    " ( " + STOCK_ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    STOCK_DRUG_ID_COLUMN + " INTEGER, " +
+                    STOCK_DATE_COLUMN + " TEXT, " +
+                    STOCK_STOCK_ENTRY_COLUMN + " INTEGER ); ";
 
 
 
@@ -133,6 +187,12 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
 
         db.execSQL(CREATE_PatientRecord_TABLE);
         db.execSQL(CREATE_VisitRecord_TABLE);
+        db.execSQL(CREATE_DoctorRecord_TABLE);
+        db.execSQL(CREATE_ClinicRecord_TABLE);
+        db.execSQL(CREATE_BillRecord_TABLE);
+        db.execSQL(CREATE_BillItemRecord_TABLE);
+        db.execSQL(CREATE_DrugRecord_TABLE);
+        db.execSQL(CREATE_StockRecord_TABLE);
 
 
     }
@@ -141,6 +201,12 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS "+ PATIENT_RECORD_TABLE );
         db.execSQL("DROP TABLE IF EXISTS "+ VISIT_RECORD_TABLE );
+        db.execSQL("DROP TABLE IF EXISTS "+ DOCTOR_RECORD_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS "+ CLINIC_RECORD_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS "+ BILL_RECORD_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS "+ BILL_ITEM_RECORD_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS "+ DRUG_RECORD_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS "+ STOCK_RECORD_TABLE);
         onCreate(db);
     }
 
@@ -194,9 +260,14 @@ public class MyDataBaseHelper extends SQLiteOpenHelper  {
 
     }
 
+    public int update(Patient patient){
 
+        return 0;
+    }
 
-
+    public int update(Visit visit){
+        return 0;
+    }
 
 
     public Patient getLastPatient(){

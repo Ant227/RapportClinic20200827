@@ -72,10 +72,10 @@ Database File Name : "RapportClinical.db"
 	            "_id",              primary key, int
 	            "brand_name",       text
 	            "generic_name"      text
-	            "company_name"      text
+	            "company_info"      text
 	            "form"              text
-	            "per_card"          text
-	            "per_package"       text
+	            "per_card"          int
+	            "per_package"       int
 	            "category"          text
 
     Table Name : "StockRecord"
@@ -84,4 +84,4 @@ Database File Name : "RapportClinical.db"
                 "_id"           primary key, int
                 "drug_id"       int
                 "date"          text
-                "stock_entry"   text
+                "stock_entry"   int
